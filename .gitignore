@@ -1,0 +1,20 @@
+node_modules
+test/
+dist/
+
+# Ignore all node_modules
+node_modules/*
+
+# Compiled JS
+public/js/bundle.js
+public/js/bundle.js.map
+
+# vim swap files
+*.swp
+*.swo
+
+tests/*
+.env
+
+package-lock.json
+*~
