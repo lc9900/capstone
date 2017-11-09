@@ -7,3 +7,5 @@ const Place = db.define('place', {
     googleId: Sequelize.INTEGER,
     yelpId: Sequelize.INTEGER
 })
+
+module.exports = Place;
