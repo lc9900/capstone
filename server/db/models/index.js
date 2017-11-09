@@ -4,7 +4,7 @@ const User = require('./User');
 
 
 // Association
-
+User.belongsToMany(User, {as: 'friends', through: 'userFriends'})
 
 // Wrapper
 
