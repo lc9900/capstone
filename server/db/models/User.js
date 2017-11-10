@@ -27,7 +27,8 @@ const User = db.define('user',{
 
 User.login = function(credential){
   return User.findOne({
-        where: credential
+        where: credential,
+        include:[db.models.place]
     }).then(user => {
         if (user) {
             return user;

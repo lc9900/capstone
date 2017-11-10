@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const User = require('../db/models/User');
+const {User} = require('../db/models');
+// const User = require('../db/models/User'); // Doesn't work
+// const db = require('../db');
 
 require('dotenv').config();
 
@@ -19,6 +21,7 @@ router.post('/', (req, res, next) => {
             // res.send(user);
         })
         .catch(err => {
+            console.log(err);
             res.status(401).send(err);
         });
 });
