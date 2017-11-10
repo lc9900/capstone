@@ -12,12 +12,15 @@ User.belongsToMany(User, {as: 'friends', through: 'user_friends_map'});
 User.belongsToMany(Place, {through: 'user_place_map'});
 Place.belongsToMany(User, {through: 'user_place_map'});
 
+// Meetup and place
 Meetup.belongsTo(Place);
 Place.hasMany(Meetup);
 
+// Meetup and User
 Meetup.belongsToMany(User, {through: 'user_meetup_map'});
 User.belongsToMany(Meetup, {through: 'user_meetup_map'});
 
+// Meetup status per user.
 MeetupUserStatus.belongsTo(User);
 MeetupUserStatus.belongsTo(Meetup);
 User.hasMany(MeetupUserStatus);

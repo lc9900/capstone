@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { BrowserRouter, Route, NavLink, withRouter } from "react-router-dom";
 
 import Login from "./Login";
-import Analytic from "./Analytic";
 import Nav from "./Nav";
 import {} from "../reducers";
 
