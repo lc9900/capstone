@@ -18,8 +18,8 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Nav />
         <div className="container">
+          <Nav />
           <h1>Main</h1>
         </div>
       </div>
