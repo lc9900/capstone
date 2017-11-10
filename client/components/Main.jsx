@@ -19,7 +19,7 @@ class Main extends Component {
       <div>
         <div className="container">
           <Nav />
-          <h1>Main</h1>
+          <Login/>
         </div>
       </div>
     );
