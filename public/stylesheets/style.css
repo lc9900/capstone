@@ -3,3 +3,8 @@ nav {
   padding: 8px;
   margin-top: 5px;
 }
+
+.navbar-brand {
+  color: pink;
+  font-weight: bold;
+}

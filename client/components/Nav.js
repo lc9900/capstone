@@ -3,21 +3,32 @@ import React from "react";
 export default function Nav(props) {
   return (
     <div>
-      <header className="masthead clearfix">
-        <div className="inner">
-          <nav className="nav nav-pills justify-content-end">
-            <a className="nav-link active" href="#">
-              Home
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">
+          Rendezvous
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">
+              Home <span class="sr-only">(current)</span>
             </a>
-            <a className="nav-link" href="#">
+            <a class="nav-item nav-link" href="#">
               Account
             </a>
-            <a className="nav-link" href="#">
-              Log Out
-            </a>
-          </nav>
+          </div>
         </div>
-      </header>
+      </nav>
     </div>
   );
 }
