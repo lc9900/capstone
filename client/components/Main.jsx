@@ -5,14 +5,21 @@ import { BrowserRouter, Route, NavLink, withRouter } from "react-router-dom";
 
 import Login from "./Login";
 import Nav from "./Nav";
-import {} from "../reducers";
+import { verifyUser, loadUser } from '../reducers';
 
 class Main extends Component {
   constructor() {
     super();
   }
 
-  componentDidMount() {}
+    componentDidMount() {
+    const { loginUser, loadSessionUser } = this.props;
+    return loadSessionUser()
+          .catch(err => {
+            console.log('error occurred ', err.response.data);
+            throw err;
+          });
+  }
 
   render() {
     return (
@@ -31,11 +38,21 @@ class Main extends Component {
 // The following container is needed only to set default user
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = state => {
-  return {};
+const mapState = ({user}) => {
+  return {
+    user
+  };
 };
-const mapDispatch = dispatch => {
-  return {};
+
+const mapDispatch = (dispatch) => {
+  return {
+    loginUser: function(credential){
+      return dispatch(verifyUser(credential));
+    },
+    loadSessionUser: function(){
+      return dispatch(loadUser());
+    }
+  };
 };
 
 export default withRouter(connect(mapState, mapDispatch)(Main));
