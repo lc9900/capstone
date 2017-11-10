@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "webpack",
-    "seed": "node seed.js",
+    "seed": "node server/db/seed.js",
     "start:dev": "webpack -w & nodemon --ignore /client --ignore /public server.js",
     "start": "node server.js"
   },
