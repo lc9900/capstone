@@ -13,7 +13,7 @@ db.sync({force:true})
 
 const seed = () => {
     return Promise.all([
-    User.create({ name: 'Bob', email: 'Bob@capstone.com', password: '123' }),
+    User.create({ name: 'Bob', email: 'bob@capstone.com', password: '123' }),
     User.create({ name: 'Boyoon', email: 'boyoon@capstone.com', password: '123' }),
     User.create({ name: 'AJ', email: 'aj@capstone.com', password: '123' }),
     User.create({ name: 'Han', email: 'han@capstone.com', password: '123' }),
