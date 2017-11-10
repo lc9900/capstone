@@ -1,42 +1,42 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from "react";
+import { connect } from "react-redux";
 // import {fetchProducts} from '../store.js'
-import {BrowserRouter, Route, NavLink, withRouter} from 'react-router-dom'
+import { BrowserRouter, Route, NavLink, withRouter } from "react-router-dom";
 
-import Login from './Login';
-import Analytic from './Analytic';
-import { } from '../reducers';
+import Login from "./Login";
+import Analytic from "./Analytic";
+import Nav from "./Nav";
+import {} from "../reducers";
 
 class Main extends Component {
-	constructor(){
-		super();
-	}
+  constructor() {
+    super();
+  }
 
-	componentDidMount() {
-	}
+  componentDidMount() {}
 
-	render(){
-		return (
-			<div className='container'>
-				<h1> Main</h1>
-			</div>
-		)
-	}
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <Nav />
+          <h1>Main</h1>
+        </div>
+      </div>
+    );
+  }
 }
 
 // export default Main  // This is only commented out to set default user
 
-
 // The following container is needed only to set default user
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = (state) => {
-  return {
-  }
-}
-const mapDispatch = (dispatch) => {
-  return {
-  };
+const mapState = state => {
+  return {};
+};
+const mapDispatch = dispatch => {
+  return {};
 };
 
 export default withRouter(connect(mapState, mapDispatch)(Main));
