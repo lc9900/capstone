@@ -33,8 +33,6 @@ class Login extends React.Component {
           email: '',
           password: ''
         });
-
-				this.props.getCart(this.props.user.id);
       })
       .catch(err => {
         this.setState({error: err.response.data});
@@ -125,9 +123,6 @@ const mapDispatch = (dispatch) => {
 
     logoutUser: function(){
       dispatch(logout())
-        .then(() => {
-          dispatch(clearCart());
-        });
 		},
 
 		getCart : function(id){
