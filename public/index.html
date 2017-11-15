@@ -27,7 +27,9 @@
       <label for="changemode-driving">Driving</label>
     </div>
 
-    <div id="map"></div>
+    <div id="map" class='col-sm-8' ></div>
+    <iframe id='results' src=""></iframe>
+ 
 
     <script>
       // This example requires the Places library. Include the libraries=places
@@ -153,6 +155,21 @@
           // });
           if (status === 'OK') {
             me.directionsDisplay.setDirections(response);
+            let results = document.getElementById("results");
+            console.log('results:', results);
+            results.setAttribute('src','https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=AIzaSyAopJDwUG1vlrsZg94qP6yuPtzapUgYw8g');
+
+            const resulters = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=AIzaSyAopJDwUG1vlrsZg94qP6yuPtzapUgYw8g';
+
+            var window = this.window.open(resulters, "<iframe></iframe>");
+
+            // const content = '<button >script test</button>'
+
+            // document.getElementById("results").innerHTML = content;
+            // results = document.getElementById("results");
+            // console.log('results 2:', results);
+
+
           } else {
             window.alert('Directions request failed due to ' + status);
           }
