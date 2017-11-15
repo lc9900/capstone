@@ -28,6 +28,7 @@
     </div>
 
     <div id="map"></div>
+    <div id='results' class='col-sm-10'>No results</div>
 
     <script>
       // This example requires the Places library. Include the libraries=places
@@ -35,9 +36,10 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
       let midpointLat = 40.771;
       let midpointLng = -73.974;
+      var map;
 
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
           mapTypeControl: false,
           center: {lat: 40.771, lng: -73.974},
           zoom: 13
@@ -152,7 +154,31 @@
           //   title: 'Rendezvous Area'
           // });
           if (status === 'OK') {
+            service = new google.maps.places.PlacesService(map);
+            midpoint = new google.maps.LatLng(midpointLat,midpointLng);
+            var request = {
+              location: midpoint,
+              radius: '500',
+              type: ['restaurant']
+            };
+            service.textSearch(request, callback);
+            let places = [];
+            function callback(results, status) {
+              if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                  var place = results[i];
+                  // console.log('map:', map)
+                  // createMarker(results[i]);
+
+                    places.push({'name': place.name, 'address': place.formatted_address});
+                }
+                console.log('places = ', places);
+
+                document.getElementById('results').innerHTML = "<code>" + JSON.stringify(places) + "</code>";
+              }
+            }
             me.directionsDisplay.setDirections(response);
+            console.log("me:   ", me )
           } else {
             window.alert('Directions request failed due to ' + status);
           }
