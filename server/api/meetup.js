@@ -18,11 +18,20 @@ router.post('/', (req, res, next) => {
 
 // Update a Meetup
 router.put('/:id', (req, res, next) => {
-
+    Meetup.findById(req.params.id * 1)
+    .then(meetup => {
+        res.json(meetup)
+    })
+    .catch(next);
 })
 
 //Cancel Meetup
 router.delete('/:id', (req, res, next) => {
-
+    Meetup.findById(req.params.id * 1)
+    .then(meetup => {
+        return meetup.destroy();
+    })
+    .then(() => res.send('deleted'))
+    .catch(next);
 })
 
