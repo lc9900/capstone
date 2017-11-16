@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {  } from '../store';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-export default class NewProposal extends Component {
+class NewProposal extends Component {
     constructor(){
         super();
     }
 
     render(){
+        const {user} = this.props;
+        if(! user.id) return <Redirect to='/Login' />
+
         return (
             <div>
                 <h1> New Proposal Page </h1>
@@ -16,3 +19,30 @@ export default class NewProposal extends Component {
         )
     }
 }
+
+
+//////////////////////////////////////////////////////
+
+const mapState = (state) => {
+  return {
+    user: state.user
+  }
+}
+const mapDispatch = (dispatch) => {
+  return {
+  //   loginUser: function(credential){
+  //     return dispatch(verifyUser(credential));
+  //   },
+
+  //   logoutUser: function(){
+  //     dispatch(logout())
+  //       },
+
+  //       getCart : function(id){
+  //           return dispatch(fetchCart(id))
+  //       }
+  };
+};
+
+// export default connect(mapState, mapDispatch)(Login);
+export default connect(mapState, mapDispatch)(NewProposal);

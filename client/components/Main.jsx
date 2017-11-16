@@ -6,7 +6,8 @@ import {Route, NavLink, withRouter, Switch, Redirect} from 'react-router-dom';
 import Login from "./Login";
 import Nav from "./Nav";
 import NewProposal from "./NewProposal";
-import { verifyUser, loadUser } from '../reducers';
+// import { verifyUser, loadUser } from '../store';
+import { displayMain, loadUser, logout } from '../store';
 
 class Main extends Component {
   constructor() {
@@ -14,8 +15,16 @@ class Main extends Component {
   }
 
     componentDidMount() {
-    const { loginUser, loadSessionUser } = this.props;
+    // const { loginUser, loadSessionUser } = this.props;
+    const { loadSessionUser, setDisplayMain } = this.props;
     return loadSessionUser()
+          .then(() => {
+                // Display flag is only useful on first page load, or refresh.
+                // It prevents any data from showing until loadSessionUser is completed.
+                // loadSessionUser makes an axios call, thus timing can cause
+                // unwanted data from display.
+                setDisplayMain(true);
+            })
           .catch(err => {
             console.log('error occurred ', err.response.data);
             throw err;
@@ -23,6 +32,9 @@ class Main extends Component {
   }
 
   render() {
+    const {user, display} = this.props;
+    if(!display) return <div></div>;
+
     return (
       <div>
         <div className="container">
@@ -43,20 +55,22 @@ class Main extends Component {
 // The following container is needed only to set default user
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({user}) => {
+const mapState = ({user, display}) => {
   return {
-    user
+    user, display
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loginUser: function(credential){
-      return dispatch(verifyUser(credential));
+    loadSessionUser: () => dispatch(loadUser()),
+    setDisplayMain: (flag) => dispatch(displayMain(flag)),
+    logoutUser: () => {
+        dispatch(logout())
+            // .then(() => {
+            // })
+            .catch(err => { throw err; });
     },
-    loadSessionUser: function(){
-      return dispatch(loadUser());
-    }
   };
 };
 
