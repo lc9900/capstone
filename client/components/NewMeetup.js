@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {  } from '../store';
 import { Redirect } from 'react-router-dom';
 
-class NewProposal extends Component {
+class NewMeetup extends Component {
     constructor(){
         super();
     }
@@ -14,7 +14,7 @@ class NewProposal extends Component {
 
         return (
             <div>
-                <h1> New Proposal Page </h1>
+                <h1> New Meetup Page </h1>
             </div>
         )
     }
@@ -45,4 +45,4 @@ const mapDispatch = (dispatch) => {
 };
 
 // export default connect(mapState, mapDispatch)(Login);
-export default connect(mapState, mapDispatch)(NewProposal);
+export default connect(mapState, mapDispatch)(NewMeetup);
