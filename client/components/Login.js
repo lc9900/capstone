@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { verifyUser, logout, fetchCart, clearCart } from '../store';
+import { verifyUser, logout } from '../store';
 import { Redirect } from 'react-router-dom';
 
 /* -----------------    COMPONENT     ------------------ */
