@@ -6,4 +6,8 @@ const Meetup = db.define('meetup', {
     time: Sequelize.DATE // TIMESTAMP WITH TIME ZONE for postgres
 })
 
+Meetup.addMeetup = function(data) {
+
+}
+
 module.exports = Meetup;
