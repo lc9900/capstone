@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // import {fetchProducts} from '../store.js'
-import { BrowserRouter, Route, NavLink, withRouter } from "react-router-dom";
+import {Route, NavLink, withRouter, Switch, Redirect} from 'react-router-dom';
 
 import Login from "./Login";
 import Nav from "./Nav";
+import NewProposal from "./NewProposal";
 import { verifyUser, loadUser } from '../reducers';
 
 class Main extends Component {
@@ -26,7 +27,11 @@ class Main extends Component {
       <div>
         <div className="container">
           <Nav />
-          <Login/>
+          <Switch>
+              <Route path='/newproposal' component={NewProposal} />
+              <Route path='/login' component={Login}/>
+              <Redirect to='/Login' />
+          </Switch>
         </div>
       </div>
     );
