@@ -6,6 +6,7 @@ const Meetup = db.define('meetup', {
     time: Sequelize.DATE // TIMESTAMP WITH TIME ZONE for postgres
 })
 
+// Assuming data is { year, date, }
 Meetup.addMeetup = function(data) {
 
 }

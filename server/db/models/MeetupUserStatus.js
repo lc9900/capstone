@@ -1,9 +1,11 @@
 const db = require('../');
 const { Sequelize } = db;
 
-// Status of the meetup per user -- pending, accepted, rejected, past, etc.
+// Status of the meetup per user
+
 const MeetupUserStatus = db.define('meetup_user_status', {
-    status: Sequelize.STRING
+    initiator: Sequelize.BOOLEAN,
+    status: Sequelize.ENUM('initiated', 'received', 'pending', 'accepted', 'rejected', 'canceled')
 });
 
 module.exports = MeetupUserStatus;
