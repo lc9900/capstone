@@ -58,7 +58,7 @@ const seed = () => {
         let seedMeetup = meetup;
         return Promise.all([
             meetup.setPlace(seedPlaces[0]),
-            meetup.setUsers([seedUsers[0], seedUsers[1]]),
+            meetup.setUsers([1, 2]),
             MeetupUserStatus.create({
                 initiator: true,
                 status: 'initiated',
