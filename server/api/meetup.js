@@ -30,12 +30,16 @@ router.post('/add/:userId', (req, res, next) => {
 // Update a Meetup -- modify or cancel
 // tested
 router.put('/:id', (req, res, next) => {
-    Meetup.findById(req.params.id * 1)
-    .then(meetup => {
-        return meetup.update(req.body);
-    })
-    .then(() => res.send('updated'))
-    .catch(next);
+    // Meetup.findById(req.params.id * 1)
+    // .then(meetup => {
+    //     return meetup.update(req.body);
+    // })
+
+    Meetup.updateMeetup(req.body, req.params.id * 1)
+        .then(() => res.send('updated'))
+        .catch(err => {
+            res.status(409).send(err);
+        });
 })
 
 //Delete Meetup -- Not sure if that's needed

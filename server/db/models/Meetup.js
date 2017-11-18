@@ -49,9 +49,35 @@ Meetup.initiateMeetup = function(data, initiatorId) {
 Meetup.updateMeetup = function(data, meetupId) {
     // If meet time is update, then need to check for scheduling conflict.
     // The check should ignore the conflict itself
-    const {year, month, date, hour, friendId} = data;
+    const {year, month, date, hour, placeId, status} = data;
+    let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
+        target_meetup;
 
+    Meetup.findById(meetupId)
+        .then(meetup => {
+            target_meetup = meetup;
+            return meetup.getUsers();
+        })
+        .then(users => {
+            let userPromises = users.map(user => Meetup.checkConflict(meetTime, user.id, meetupId));
+            return Promise.all(userPromises);
+        })
+        .then(conflicts => {
+            // If checkConflict returns true for anyone, then throw error and
+            // not update
+            if(conficts.indexOf(true) !== -1 ) {
+                throw 'Scheduling confict found';
+            }
 
+            // If no conflict is found, then update Meetup model
+            return target_meetup.update({time: meetTime, placeId});
+        })
+        .then(() => {
+            // Got to update status
+            return db.models.meetup_user_status.update({status}, {
+                where: { meetupId: target_meetup.id }
+            })
+        })
 }
 
 // tested
