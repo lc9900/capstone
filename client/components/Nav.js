@@ -21,8 +21,8 @@ export default function Nav(props) {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <NavLink className="nav-item nav-link" to="/" activeClassName="active">Home</NavLink>
-            <NavLink className="nav-item nav-link" to="/newproposal" activeClassName="active">New Rendezvous</NavLink>
+            <NavLink className="nav-item nav-link" to="/login" activeClassName="active">Home</NavLink>
+            <NavLink className="nav-item nav-link" to="/meetup" activeClassName="active">Meetup</NavLink>
           </div>
         </div>
       </nav>

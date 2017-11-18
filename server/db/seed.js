@@ -2,8 +2,9 @@ const db = require('./');
 const { Sequelize } = db;
 
 //Models
-const {User, Place} = require('./models');
+const {User, Place, Meetup, MeetupUserStatus} = require('./models');
 let seedUsers = [],
+    seedMeetup,
     seedPlaces = [];
 
 db.sync({force:true})
@@ -36,7 +37,7 @@ const seed = () => {
         ]);
     })
     .then(places => {
-        seedPlaces = places
+        seedPlaces = places;
         return Promise.all([
             seedUsers[0].addPlace(places[0]),
             seedUsers[1].addPlace(places[1]),
@@ -44,9 +45,40 @@ const seed = () => {
             seedUsers[3].addPlace(places[3])
         ]);
     })
+    // For meetup seeding
+    .then(() => {
+        let meetTime = new Date();
+        meetTime.setHours(23);
+        meetTime.setMinutes(0);
+        meetTime.setSeconds(0);
+        meetTime.setMilliseconds(0);
+        return Meetup.create({time: meetTime});
+    })
+    .then(meetup => {
+        let seedMeetup = meetup;
+        return Promise.all([
+            meetup.setPlace(seedPlaces[0]),
+            meetup.setUsers([1, 2]),
+            MeetupUserStatus.create({
+                initiator: true,
+                status: 'initiated',
+                userId: seedUsers[0].id,
+                meetupId: meetup.id
+            }),
+            MeetupUserStatus.create({
+                initiator: false,
+                status: 'initiated',
+                userId: seedUsers[1].id,
+                meetupId: meetup.id
+            }),
+        ]);
+    })
     .then(() => console.log('seeded!'))
     .then(() => db.close())
-    .catch(err => { throw err; });
+    .catch(err => {
+        db.close()
+        throw err;
+    });
 }
 
 
