@@ -1,5 +1,6 @@
 const db = require('../');
 const { Sequelize } = db;
+const Op = Sequelize.Op;
 
 const Meetup = db.define('meetup', {
     // location: Sequelize.STRING, // Since this links to Place, we don't need it
@@ -44,13 +45,25 @@ Meetup.initiateMeetup = function(data, initiatorId) {
             });
 };
 
+// Update meetup
+Meetup.updateMeetup = function(data, meetupId) {
+    // If meet time is update, then need to check for scheduling conflict.
+    // The check should ignore the conflict itself
+    const {year, month, date, hour, friendId} = data;
+
+
+}
+
 // tested
-Meetup.checkConflict = function(meetTime, userId) {
+Meetup.checkConflict = function(meetTime, userId, meetupId = 0) {
     return db.models.user.findById(userId)
               .then(user => {
                 return user.getMeetups({
                   where: {
-                    time: meetTime
+                    time: meetTime,
+                    id: {
+                        [Op.ne]: meetupId
+                    }
                   }
                 });
               })
