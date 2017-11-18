@@ -14,7 +14,9 @@ router.get('/:id', (req, res, next) => {
 })
 
 // Add New Meetup.
-// The method should check if there's already a meetup during that time.
+// The method checks if there's already a meetup during that time.
+// req.body should have --
+// year, month, date, hour, friendId
 // tested
 router.post('/add/:userId', (req, res, next) => {
     Meetup.initiateMeetup(req.body, req.params.userId * 1)
@@ -28,13 +30,11 @@ router.post('/add/:userId', (req, res, next) => {
 
 
 // Update a Meetup -- modify or cancel
+// The method will check for time conflict. If found, error is 409 will be sent
+// req.body should have --
+// year, month, date, hour, placeId, status
 // tested
 router.put('/:id', (req, res, next) => {
-    // Meetup.findById(req.params.id * 1)
-    // .then(meetup => {
-    //     return meetup.update(req.body);
-    // })
-
     Meetup.updateMeetup(req.body, req.params.id * 1)
         .then(() => res.send('updated'))
         .catch(err => {
