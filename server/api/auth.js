@@ -12,6 +12,7 @@ router.post('/', (req, res, next) => {
     User.login(req.body)
         .then(user => {
             delete user.dataValues.password;
+            user.dataValues.friends.forEach(friend => {delete friend.dataValues.password});
             // req.session.user = user;
             req.login(user, function(err) {
               if (err) { return next(err); }
@@ -30,6 +31,7 @@ router.post('/signup', (req, res, next) => {
     User.create(req.body)
         .then(user => {
             delete user.dataValues.password;
+            user.dataValues.friends.forEach(friend => delete friend.dataValues.password);
             // req.session.user = user;
             req.login(user, function(err) {
               if (err) { return next(err); }
