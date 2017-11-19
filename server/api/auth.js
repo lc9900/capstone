@@ -1,11 +1,25 @@
 const router = require('express').Router();
 const {User} = require('../db/models');
+const passport = require('passport');
 // const User = require('../db/models/User'); // Doesn't work
 // const db = require('../db');
 
 require('dotenv').config();
 
 // console.log("process.env.GOOGLE_CLIENT_SECRET=", process.env.GOOGLE_CLIENT_SECRET);
+
+// passport.serializeUser(function (user, done) {
+//     done(null, user.id);
+// });
+
+// passport.deserializeUser(function (userId, done) {
+//   User.findUser(userId)
+//   .then(function (user) {
+//     delete user.dataValues.password;
+//     done(null, user);
+//   })
+//   .catch(done);
+// });
 
 router.post('/', (req, res, next) => {
 
@@ -51,6 +65,7 @@ router.post('/logout', (req, res, next) => {
 
 router.get('/me', (req, res, next) => {
     // if(req.session.user) return res.send(req.session.user);
+    console.log(req.user)
     if(req.user) return res.send(req.user);
     res.send({});
 })

@@ -12,7 +12,8 @@ const Meetup = db.define('meetup', {
 Meetup.initiateMeetup = function(data, initiatorId) {
     const {year, month, date, hour, friendId} = data;
     // Javascript's Date's month is 0-based,
-    // So if user specify December, javascript knows it as 11 (12 - 1)
+    // So if user specify 12(december), javascript knows it as 11 (12 - 1)
+    // which is why it's month -1 below
     let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
         target_meetup
     return Promise.all([

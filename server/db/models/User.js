@@ -39,4 +39,21 @@ User.login = function(credential){
         throw 'Invalid Login';
   });
 };
+
+User.findUser = function(userId){
+  return User.findOne({
+        where: {
+          id: userId
+        },
+        include:[db.models.place, {
+          model: User,
+          as: 'friends'
+        }]
+    }).then(user => {
+        if (user) {
+            return user;
+        }
+        throw 'Invalid Login';
+  });
+};
 module.exports = User;
