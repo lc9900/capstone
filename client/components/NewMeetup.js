@@ -22,12 +22,6 @@ class NewMeetup extends Component {
           avail_months: _.range(1, 13),
           avail_dates: _.range(1, daysInMonth(now_year, now_month) + 1),
           avail_hours: _.range(24),
-          // input_year: now_year,
-          // input_month: now_month,
-          // input_date: now_date,
-          // input_hour: now_hour,
-          // input_friend: user.friends[0].id,
-          // input_err: ''
           input_year:  -1,
           input_month: -1,
           input_date: -1,
@@ -180,17 +174,6 @@ const mapState = (state) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-  //   loginUser: function(credential){
-  //     return dispatch(verifyUser(credential));
-  //   },
-
-  //   logoutUser: function(){
-  //     dispatch(logout())
-  //       },
-
-  //       getCart : function(id){
-  //           return dispatch(fetchCart(id))
-  //       }
   };
 };
 

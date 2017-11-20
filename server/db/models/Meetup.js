@@ -60,6 +60,7 @@ Meetup.updateMeetup = function(data, meetupId) {
 
     return Meetup.findById(meetupId)
         .then(meetup => {
+            if (meetTime < new Date()) throw "Scheduled Time is in the past!";
             target_meetup = meetup;
             return meetup.getUsers();
         })
