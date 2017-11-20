@@ -1,48 +1,50 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // import {fetchProducts} from '../store.js'
-import {Route, NavLink, withRouter, Switch, Redirect} from 'react-router-dom';
+import { Route, NavLink, withRouter, Switch, Redirect } from "react-router-dom";
 
 import Login from "./Login";
 import Nav from "./Nav";
+import MapContainer from "./MapContainer";
 import NewMeetup from "./NewMeetup";
 // import { verifyUser, loadUser } from '../store';
-import { displayMain, loadUser, logout } from '../store';
+import { displayMain, loadUser, logout } from "../store";
 
 class Main extends Component {
   constructor() {
     super();
   }
 
-    componentDidMount() {
+  componentDidMount() {
     // const { loginUser, loadSessionUser } = this.props;
     const { loadSessionUser, setDisplayMain } = this.props;
     return loadSessionUser()
-          .then(() => {
-                // Display flag is only useful on first page load, or refresh.
-                // It prevents any data from showing until loadSessionUser is completed.
-                // loadSessionUser makes an axios call, thus timing can cause
-                // unwanted data from display.
-                setDisplayMain(true);
-            })
-          .catch(err => {
-            console.log('error occurred ', err.response.data);
-            throw err;
-          });
+      .then(() => {
+        // Display flag is only useful on first page load, or refresh.
+        // It prevents any data from showing until loadSessionUser is completed.
+        // loadSessionUser makes an axios call, thus timing can cause
+        // unwanted data from display.
+        setDisplayMain(true);
+      })
+      .catch(err => {
+        console.log("error occurred ", err.response.data);
+        throw err;
+      });
   }
 
   render() {
-    const {user, display} = this.props;
-    if(!display) return <div></div>;
+    const { user, display } = this.props;
+    if (!display) return <div />;
 
     return (
       <div>
         <div className="container">
           <Nav />
+          <MapContainer />
           <Switch>
-              <Route path='/meetup' component={NewMeetup} />
-              <Route path='/login' component={Login}/>
-              <Redirect to='/Login' />
+            <Route path="/meetup" component={NewMeetup} />
+            <Route path="/login" component={Login} />
+            {/*<Redirect to="/Login" />*/}
           </Switch>
         </div>
       </div>
@@ -55,22 +57,25 @@ class Main extends Component {
 // The following container is needed only to set default user
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({user, display}) => {
+const mapState = ({ user, display }) => {
   return {
-    user, display
+    user,
+    display
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
     loadSessionUser: () => dispatch(loadUser()),
-    setDisplayMain: (flag) => dispatch(displayMain(flag)),
+    setDisplayMain: flag => dispatch(displayMain(flag)),
     logoutUser: () => {
-        dispatch(logout())
-            // .then(() => {
-            // })
-            .catch(err => { throw err; });
-    },
+      dispatch(logout())
+        // .then(() => {
+        // })
+        .catch(err => {
+          throw err;
+        });
+    }
   };
 };
 
