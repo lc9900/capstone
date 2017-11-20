@@ -20,6 +20,12 @@ Place.hasMany(Meetup);
 Meetup.belongsToMany(User, {through: 'user_meetup_map'});
 User.belongsToMany(Meetup, {through: 'user_meetup_map'});
 
+// Meetup status per user.
+MeetupUserStatus.belongsTo(User);
+MeetupUserStatus.belongsTo(Meetup);
+User.hasMany(MeetupUserStatus);
+Meetup.hasMany(MeetupUserStatus);
+
 // Wrapper
 
 module.exports = {
