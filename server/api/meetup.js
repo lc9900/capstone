@@ -19,6 +19,7 @@ router.get('/:id', (req, res, next) => {
 // year, month, date, hour, friendId
 // tested
 router.post('/add/:userId', (req, res, next) => {
+    if(!validateMeetupTime(req.body)) return res.status(409).send('Scheduled Time is in the past!');
     Meetup.initiateMeetup(req.body, req.params.userId * 1)
         .then(() => {
             res.send("added");
@@ -37,6 +38,8 @@ router.post('/add/:userId', (req, res, next) => {
 // year, month, date, hour, placeId, status
 // tested
 router.put('/:id', (req, res, next) => {
+    if(!validateMeetupTime(req.body)) return res.status(409).send('Scheduled Time is in the past!');
+
     Meetup.updateMeetup(req.body, req.params.id * 1)
         .then(() => res.send('updated'))
         .catch(err => {
@@ -64,3 +67,12 @@ router.delete('/:id', (req, res, next) => {
     .catch(next);
 })
 
+// Validate the meetup time. Since this doesn't involve database interaction,
+// it's moved here into the api.
+function validateMeetupTime(data) {
+    const {year, month, date, hour} = data;
+    let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0);
+    if (meetTime < new Date()) return false;
+
+    return true;
+}

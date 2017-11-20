@@ -16,14 +16,12 @@ Meetup.initiateMeetup = function(data, initiatorId) {
     // which is why it's month -1 below
     let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
         target_meetup;
-    // if(meetTime < new Date()) throw "Scheduled Time is in the past!";
 
     return Promise.all([
                 this.checkConflict(meetTime, initiatorId),
                 this.checkConflict(meetTime, friendId)
             ])
             .then(([initiator_conflict, friend_conflict]) => {
-                if (meetTime < new Date()) throw "Scheduled Time is in the past!";
                 if (initiator_conflict) throw 'You have scheduling conflict';
                 if (friend_conflict) throw 'Your friend has scheduling conflict';
 
@@ -60,7 +58,6 @@ Meetup.updateMeetup = function(data, meetupId) {
 
     return Meetup.findById(meetupId)
         .then(meetup => {
-            if (meetTime < new Date()) throw "Scheduled Time is in the past!";
             target_meetup = meetup;
             return meetup.getUsers();
         })
