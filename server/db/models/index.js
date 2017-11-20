@@ -3,6 +3,7 @@ const Sequelize = db.Sequelize;
 const User = require('./User');
 const Meetup = require('./Meetup');
 const Place = require('./Place');
+const MeetupUserPref = require('./MeetupUserPref');
 const MeetupUserStatus = require('./MeetupUserStatus');
 
 // Association
@@ -25,6 +26,12 @@ MeetupUserStatus.belongsTo(User);
 MeetupUserStatus.belongsTo(Meetup);
 User.hasMany(MeetupUserStatus);
 Meetup.hasMany(MeetupUserStatus);
+
+//User's preference model
+MeetupUserPref.belongsTo(User);
+MeetupUserPref.belongsTo(Meetup);
+User.hasMany(MeetupUserPref);
+Meetup.hasMany(MeetupUserPref);
 
 // Wrapper
 
