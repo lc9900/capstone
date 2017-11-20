@@ -29,21 +29,6 @@ export function setMeetingDestination(location) {
 }
 
 // THUNK
-export function verifyUser(credential) {
-    return function thunk(dispatch) {
-        return axios
-            .post("/api/auth", credential)
-            .then(res => res.data)
-            .then(user => {
-                if (user) {
-                    dispatch(setCurrentUser(user));
-                }
-            })
-            .catch(err => {
-                throw err;
-            });
-    };
-}
 
 // REDUCER
 export default function Map(

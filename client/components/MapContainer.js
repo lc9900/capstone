@@ -94,6 +94,6 @@ const mapDispatch = dispatch => {
 
 export default connect(mapState, mapDispatch)(
   GoogleApiWrapper({
-    apiKey: "AIzaSyAopJDwUG1vlrsZg94qP6yuPtzapUgYw8g"
+    apiKey: process.env.GOOGLE_MAPS
   })(MapContainer)
 );
