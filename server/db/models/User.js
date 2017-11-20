@@ -28,7 +28,27 @@ const User = db.define('user',{
 User.login = function(credential){
   return User.findOne({
         where: credential,
-        include:[db.models.place]
+        include:[db.models.place, {
+          model: User,
+          as: 'friends'
+        }]
+    }).then(user => {
+        if (user) {
+            return user;
+        }
+        throw 'Invalid Login';
+  });
+};
+
+User.findUser = function(userId){
+  return User.findOne({
+        where: {
+          id: userId
+        },
+        include:[db.models.place, {
+          model: User,
+          as: 'friends'
+        }]
     }).then(user => {
         if (user) {
             return user;
