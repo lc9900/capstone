@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../db/models/User');
+const {User} = require('../db/models');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy; // for defining google strategy
 
@@ -38,18 +38,18 @@ passport.use(
 );
 
 // Getting user info into req.user
-passport.serializeUser(function (user, done) {
-    done(null, user.id);
-});
+// passport.serializeUser(function (user, done) {
+//     done(null, user.id);
+// });
 
-passport.deserializeUser(function (userId, done) {
-  User.findById(userId)
-  .then(function (user) {
-    delete user.dataValues.password;
-    done(null, user);
-  })
-  .catch(done);
-});
+// passport.deserializeUser(function (userId, done) {
+//   User.findById(userId)
+//   .then(function (user) {
+//     delete user.dataValues.password;
+//     done(null, user);
+//   })
+//   .catch(done);
+// });
 
 // Google authentication and login
 // Where the user requests login through Google

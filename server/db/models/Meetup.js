@@ -15,12 +15,15 @@ Meetup.initiateMeetup = function(data, initiatorId) {
     // So if user specify 12(december), javascript knows it as 11 (12 - 1)
     // which is why it's month -1 below
     let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
-        target_meetup
+        target_meetup;
+    // if(meetTime < new Date()) throw "Scheduled Time is in the past!";
+
     return Promise.all([
                 this.checkConflict(meetTime, initiatorId),
                 this.checkConflict(meetTime, friendId)
             ])
             .then(([initiator_conflict, friend_conflict]) => {
+                if (meetTime < new Date()) throw "Scheduled Time is in the past!";
                 if (initiator_conflict) throw 'You have scheduling conflict';
                 if (friend_conflict) throw 'Your friend has scheduling conflict';
 

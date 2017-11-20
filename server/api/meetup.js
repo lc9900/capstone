@@ -24,6 +24,8 @@ router.post('/add/:userId', (req, res, next) => {
             res.send("added");
         })
         .catch(err => {
+            console.log("req body is ", req.body)
+            console.log(err);
             res.status(409).send(err);
         });
 } )
