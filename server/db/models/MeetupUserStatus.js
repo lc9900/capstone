@@ -11,7 +11,8 @@ const { Sequelize } = db;
 // * Canceled (all) -- when one party cancels the meetup.
 const MeetupUserStatus = db.define('meetup_user_status', {
     initiator: Sequelize.BOOLEAN,
-    status: Sequelize.ENUM('initiated', 'received', 'pending', 'accepted', 'rejected', 'canceled')
+    status: Sequelize.ENUM('initiated', 'received', 'pending', 'accepted', 'rejected', 'canceled'),
+    place_ids: Sequelize.ARRAY(Sequelize.INTEGER)
 });
 
 module.exports = MeetupUserStatus;

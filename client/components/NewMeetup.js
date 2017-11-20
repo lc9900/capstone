@@ -9,12 +9,10 @@ import {daysInMonth} from '../../utils';
 class NewMeetup extends Component {
     constructor(props){
         super();
-        let { user } = props,
-            now = new Date(),
+        const { user } = props;
+        let now = new Date(),
             now_year = now.getFullYear(),
-            now_month = now.getMonth() + 1,
-            now_date = now.getDate(),
-            now_hour = now.getHours();
+            now_month = now.getMonth() + 1;
 
 
         this.state = {
@@ -36,7 +34,7 @@ class NewMeetup extends Component {
 
     handleSubmit(event) {
       event.preventDefault();
-      let {input_year, input_month, input_date, input_hour, input_friend} = this.state;
+      const {input_year, input_month, input_date, input_hour, input_friend} = this.state;
       const {user} = this.props;
       // console.log(this.state);
       axios.post(`/api/meetup/add/${user.id}`, {
