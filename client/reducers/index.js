@@ -1,28 +1,30 @@
-import {combineReducers} from 'redux';
-// import cart from './cart';
-import user from './user';
+import { combineReducers } from "redux";
+import user from "./user";
+import map from "./map";
 
 // Simple reducer for display on main
-const DISPLAY_MAIN = 'DISPLAY_MAIN'; //  To render the main component
+const DISPLAY_MAIN = "DISPLAY_MAIN"; //  To render the main component
 
-export function displayMain(flag){
+export function displayMain(flag) {
     return {
         type: DISPLAY_MAIN,
         flag // flag is a boolean
-    }
+    };
 }
 
-const display = (state=false, action) => {
-    switch(action.type) {
+const display = (state = false, action) => {
+    switch (action.type) {
         case DISPLAY_MAIN:
             return action.flag;
-        default: return state;
+        default:
+            return state;
     }
-}
+};
 
 export default combineReducers({
-    user, display
+    user,
+    display,
+    map
 });
 
-export * from './user';
-
+export * from "./user";
