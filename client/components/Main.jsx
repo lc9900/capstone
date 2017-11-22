@@ -40,8 +40,8 @@ class Main extends Component {
       <div>
         <div className="container">
           <Nav />
-          <MapContainer />
           <Switch>
+            <Route path="/map" component={MapContainer} />
             <Route path="/meetup" component={NewMeetup} />
             <Route path="/login" component={Login} />
             {/*<Redirect to="/Login" />*/}
