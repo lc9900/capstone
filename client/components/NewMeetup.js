@@ -25,6 +25,7 @@ class NewMeetup extends Component {
           input_date: -1,
           input_hour: -1,
           input_friend: -1,
+          input_origin: -1,
           input_err: '',
           input_success: ''
         };
@@ -34,7 +35,7 @@ class NewMeetup extends Component {
 
     handleSubmit(event) {
       event.preventDefault();
-      const {input_year, input_month, input_date, input_hour, input_friend} = this.state;
+      const {input_year, input_month, input_date, input_hour, input_friend, input_origin} = this.state;
       const {user} = this.props;
       // console.log(this.state);
       axios.post(`/api/meetup/add/${user.id}`, {
@@ -42,7 +43,8 @@ class NewMeetup extends Component {
         month: input_month * 1,
         date: input_date * 1,
         hour: input_hour * 1,
-        friendId: input_friend * 1
+        friendId: input_friend * 1,
+        originId: input_origin
       })
       .then(() => {
         setTimeout(() => this.setState({input_success: ''}), 2000);
@@ -52,6 +54,7 @@ class NewMeetup extends Component {
           input_date: -1,
           input_hour: -1,
           input_friend: -1,
+          input_origin: -1,
           input_err: '',
           input_success: 'Meetup Added!'
         })
@@ -92,7 +95,7 @@ class NewMeetup extends Component {
         const {
           now_year, now_month, now_date, now_hour,
           avail_years, avail_months, avail_dates, avail_hours,
-          input_year, input_month, input_date, input_hour, input_friend, input_err, input_success
+          input_year, input_month, input_date, input_hour, input_friend, input_err, input_success, input_origin
         } = this.state;
 
         return (
@@ -145,7 +148,7 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
-                  <div className="form-group col-md-6">
+                  <div className="form-group col-md-4">
                     <label>Friend</label>
                     <select name='input_friend' value={input_friend} className="form-control" onChange={this.handleChange}>
                       <option value='-1'>Choose a friend</option>
@@ -154,6 +157,17 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
+
+                  <div className="form-group col-md-2">
+                    <label>Origin</label>
+                    <select name='input_origin' value={input_origin} className="form-control" onChange={this.handleChange}>
+                      <option value='-1'>Choose origin</option>
+                      {
+                        user.places.map(place => <option key={place.id} value={place.id}>{place.name}</option>)
+                      }
+                    </select>
+                  </div>
+
                 </div>
               <button type="submit" className="btn btn-primary">Submit</button>
             </form>
