@@ -23,6 +23,7 @@ User.belongsToMany(Meetup, {through: 'user_meetup_map'});
 // Meetup status per user.
 MeetupUserStatus.belongsTo(User);
 MeetupUserStatus.belongsTo(Meetup);
+MeetupUserStatus.belongsTo(Place, {as: 'origin'});
 User.hasMany(MeetupUserStatus);
 Meetup.hasMany(MeetupUserStatus);
 
