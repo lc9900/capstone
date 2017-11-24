@@ -16,7 +16,8 @@ export const getMeetups = (meetups) => {
 export function fetchMeetups(userId){
   return function thunk(dispatch){
     const meetupIdArray=[]
-	return axios.get(`/api/users/${userId}/meetups`)
+    const meetupIncludeUserArray=[]
+	return axios.get(`/api/user/${userId}/meetups`)
 	.then(res => {
 		return res.data
 	})
@@ -25,13 +26,17 @@ export function fetchMeetups(userId){
 			return meetupIdArray.push(i['id'])
 		})
 	})
+	
+	meetupIdArray.forEach(meetupId => {
+        axios.get(`/api/meetup/${meetupId}/includeUser`)
+        .then(res => meetupIncludeUserArray.push(res.data[0]))
+	})
 	.then(result => {
-		const action = getMeetups(meetupIdArray)
+		const action = getMeetups(meetupIncludeUserArray)
 		dispatch(action)
 	})
   }
 }
-
 		
 
 //UserMeetup Reducer

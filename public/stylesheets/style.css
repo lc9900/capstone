@@ -75,6 +75,10 @@ body {
   padding-right: 10px;
 }
 
+.card{
+  height: 350px;
+}
+
 .incoming{
   background-color: #B3C100;
 }
