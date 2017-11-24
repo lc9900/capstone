@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import user from "./user";
 import map from "./map";
 import userMeetup from "./user-meetup";
+import place from "./place";
 
 // Simple reducer for display on main
 const DISPLAY_MAIN = "DISPLAY_MAIN"; //  To render the main component
@@ -26,8 +27,10 @@ export default combineReducers({
     user,
     display,
     map,
-    userMeetup
+    userMeetup,
+    place
 });
 
 export * from "./user";
 export * from "./user-meetup";
+export * from "./place";

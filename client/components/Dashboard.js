@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { fetchMeetups } from '../store';
+import { fetchPlaces } from '../store';
 import { Redirect } from 'react-router-dom';
 // import * as _ from 'lodash';
 import axios from 'axios';
@@ -27,23 +27,24 @@ class Dashboard extends Component {
     }
     
     componentDidMount(props){
+      
+      //not using anymore. delete at end of view.
+      const placesThunk = fetchPlaces()
+      store.dispatch(placesThunk)
+
     	const userId = this.props.user.id
     	//bad to do this directly in here instead of putting on store?
-    	axios.get(`/api/users/${userId}`)
+    	axios.get(`/api/user/${userId}`)
     	.then(res => {
     		return res.data})
     	.then(result => {
     		this.setState({userApi: result})
     	})
 
-      //not using anymore. delete at end of view.
-      // const meetupsThunk = fetchMeetups(userId)
-      // store.dispatch(meetupsThunk)
-    	
       //given user id, give me a list of meetup ids and a list of meetups that include users in that meetup
     	const meetupIdArray=[]
       const meetupIncludeUserArray=[]
-    	axios.get(`/api/users/${userId}/meetups`)
+    	axios.get(`/api/user/${userId}/meetups`)
     	.then(res => {
     		return res.data
     	})
@@ -63,11 +64,17 @@ class Dashboard extends Component {
 
     }
     
+    getAddress(placeId){
+      console.log(this.props.places, placeId)
+      const grepArr = $.grep(this.props.places, function(elem){ console.log(elem, placeId);return elem.id === placeId})
+      console.log('any luck??',grepArr)
+      return grepArr[0]['address']
+    }
 
     render(){
         //considered using card-group but decided against it as it is a new feature and not responsive
 
-        const {user} = this.props;
+        const {user, places} = this.props;
         const {userApi, meetupIdArray, meetupIncludeUserArray} = this.state;
         if(! user.id) return <Redirect to='/Login' />
 
@@ -151,8 +158,8 @@ class Dashboard extends Component {
 					          			<h4 className="card-title">Meetup with {meetupFriendName}</h4>
 					          			<p className="card-text">time: {meetupTime}</p>
 					          			<p className="card-text">status: {meetupStatus}</p>
-                          <p className="card-text">place: {meetup.placeId ? meetup.placeId : placeMessage}</p>
-					      				  <a href="#" class="btn btn-light">Button</a>
+                          <p className="card-text">place: {meetup.placeId ? this.getAddress(meetup.placeId) : placeMessage}</p>
+					      				  <a href="#" className="btn btn-light">Button</a>
                           <p className="card-text"><small className="text-muted">meetup id: {meetup.id} </small></p>
 					          		</div>
 					          	</div>
@@ -175,6 +182,7 @@ class Dashboard extends Component {
 const mapState = (state) => {
   return {
     user: state.user,
+    places: state.place
     // userMeetup: state.userMeetup
   }
 }

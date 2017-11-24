@@ -13,7 +13,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 })
 
-//boyoon adding
+// get meetup with both users included in the query
 router.get('/:id/includeUser', (req, res, next) => {
     Meetup.findAll({where: {id:req.params.id * 1}, include: User})
     .then(meetup => {
