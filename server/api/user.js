@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Meetup} = require('../db/models');
+const {User, Meetup, Place} = require('../db/models');
 
 module.exports = router;
 
@@ -22,6 +22,8 @@ router.get('/:id', (req, res, next) => {
 //step 1: get user's meetups
 //step 2: get user's meetups with status attached
 //step 3: oh no, just getting a user's meetups doesn't give me the friend's id?
+//step 4: massaging to get friend's id and name through axios calls from Dashboard component
+//step 5: need to refactor
 
 router.get('/:id/meetups', (req, res, next) => {
 	User.findById(req.params.id)
@@ -33,10 +35,11 @@ router.get('/:id/meetups', (req, res, next) => {
 })
 
 
+///
+///user - place api routes. 
+///
 
-///user - place api routes. no longer in use for mvp
-
-
+//get places of user
 router.get('/:userId/places', (req, res, next) => {
 	User.findAll({
 		where: {id: req.params.userId},
@@ -46,7 +49,7 @@ router.get('/:userId/places', (req, res, next) => {
 	.catch(next)
 })
 
-
+//create place of user
 router.post('/:userId/newPlace/:address', (req, res, next) => {
 	let newPlace
 	Place.findOrCreate({
@@ -57,19 +60,22 @@ router.post('/:userId/newPlace/:address', (req, res, next) => {
 	})
 	.then(()=>{return User.findById(req.params.userId)})
 	.then(user => {
-		return user.setPlaces([newPlace])
+		return user.addPlace(newPlace)
 	})
 	.then(()=>res.sendStatus(204) )
 
 })
 
-// followed this model previously but it involved changes to model. should change. won't work right now
-// https://stackoverflow.com/questions/30276237/how-to-remove-association-in-sequelize-without-extra-query
-// models.exercise_muscle_tie.destroy({ where: { exerciseId: 1856, muscleId: 57344 } })
-
+//delete place of user
 router.delete('/:userId/deletePlace/:placeId', (req, res, next) => {
-	user_place_map.destroy({
-		where: {placeId: req.params.placeId, userId: req.params.userId}
+	let selectedUser
+	User.findById(req.params.userId)
+	.then(user => {
+		selectedUser = user
+		return Place.findById(req.params.placeId)
+	})
+	.then(place => {
+		return selectedUser.removePlace(place)
 	})
 	.then(()=>{res.sendStatus(204)})
 	.catch(next)

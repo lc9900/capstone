@@ -61,7 +61,6 @@ class Dashboard extends Component {
         })
     	})
 
-
     }
     
 
@@ -91,8 +90,8 @@ class Dashboard extends Component {
           <div>
           	<div className="container-fluid">
           		<div className="row">
-          			<div className="col-3"></div>
-          			<div className="col-6">
+          			
+          			<div className="col-12">
           				{ meetupsArray ? meetupsArray.map(meetup=>{
           					
                     const thisMeetupId = meetup.id
@@ -122,31 +121,39 @@ class Dashboard extends Component {
 
                     let meetupStatus
                     let meetupCategory
+                    let backgroundClass
+                    let placeMessage
 
                     statusArray.map(meetup => {
                       if (meetup.meetupId === thisMeetupId){
                         meetupStatus = meetup.status
                         if (meetup.status === "initiated" && meetup.initiator){
                           meetupCategory = "Pending Outgoing"
+                          backgroundClass = "outgoing"
+                          placeMessage = `we need ${meetupFriendName} to enter a starting address to give you a recommendation!`
                         }
                         else if (meetup.status === "initiated" && !meetup.initiator){
                           meetupCategory = "New Incoming"
+                          backgroundClass = "incoming"
+                          placeMessage = `we need you to enter a starting address to give you a recommendation!`
                         }
                         else {
                           meetupCategory = "Accepted"
+                          backgroundClass = "accepted"
                         }
                       }
                     })
 
-          					return (<div key={meetup.id}>
-          						<div className="card">
-					          		<div className="card-body">
-					          			<h4 className="card-title">meetup {meetup.id} - {meetupCategory}</h4>
-					          			<p className="card-text">friend name: {meetupFriendName}</p>
+          					return (<div className="meetup" key={meetup.id}>
+          						<div className="card border-secondary">
+					          		<div className={`card-header ${backgroundClass}`}> {meetupCategory}</div>
+                        <div className="card-body">
+					          			<h4 className="card-title">Meetup with {meetupFriendName}</h4>
 					          			<p className="card-text">time: {meetupTime}</p>
 					          			<p className="card-text">status: {meetupStatus}</p>
-                          <p className="card-text">for 'accepted', should be additional summary of 'parameters set' or 'preferences voted' or 'place set'</p>
-					      				<p className="card-text"><small className="text-muted">on click, should go to individual meetup view, with appropriate actions possible (</small></p>
+                          <p className="card-text">place: {meetup.placeId ? meetup.placeId : placeMessage}</p>
+					      				  <a href="#" class="btn btn-light">Button</a>
+                          <p className="card-text"><small className="text-muted">meetup id: {meetup.id} </small></p>
 					          		</div>
 					          	</div>
           						
@@ -155,7 +162,7 @@ class Dashboard extends Component {
           				}): <div></div>}
 
           			</div>
-          			<div className="col-3"></div>
+          			
           		</div>
           	</div>
         </div>
@@ -163,7 +170,6 @@ class Dashboard extends Component {
     }
 }
 
-// <p className="card-text">friend name:{userApi['friends'][meetupFriendId]}</p>
 //////////////////////////////////////////////////////
 
 const mapState = (state) => {
