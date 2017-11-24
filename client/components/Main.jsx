@@ -6,6 +6,7 @@ import {Route, NavLink, withRouter, Switch, Redirect} from 'react-router-dom';
 import Login from "./Login";
 import Nav from "./Nav";
 import NewMeetup from "./NewMeetup";
+import Dashboard from "./Dashboard";
 // import { verifyUser, loadUser } from '../store';
 import { displayMain, loadUser, logout } from '../store';
 
@@ -40,6 +41,7 @@ class Main extends Component {
         <div className="container">
           <Nav />
           <Switch>
+              <Route path='/dashboard' component={Dashboard} />
               <Route path='/meetup' component={NewMeetup} />
               <Route path='/login' component={Login}/>
               <Redirect to='/Login' />
