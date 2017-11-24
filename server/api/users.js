@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Meetup, MeetupUserStatus} = require('../db/models');
+const {User, Meetup} = require('../db/models');
 
 module.exports = router;
 

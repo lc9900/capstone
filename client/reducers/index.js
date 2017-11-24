@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import user from "./user";
 import map from "./map";
+import userMeetup from "./user-meetup";
 
 // Simple reducer for display on main
 const DISPLAY_MAIN = "DISPLAY_MAIN"; //  To render the main component
@@ -24,7 +25,9 @@ const display = (state = false, action) => {
 export default combineReducers({
     user,
     display,
-    map
+    map,
+    userMeetup
 });
 
 export * from "./user";
+export * from "./user-meetup";
