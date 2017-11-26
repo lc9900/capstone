@@ -7,10 +7,10 @@ const Meetup = db.define('meetup', {
     time: Sequelize.DATE // TIMESTAMP WITH TIME ZONE for postgres
 });
 
-// Assuming data is { year, month, date, hour, friendId}
+// Assuming data is { year, month, date, hour, friendId, originId}
 // tested
 Meetup.initiateMeetup = function(data, initiatorId) {
-    const {year, month, date, hour, friendId} = data;
+    const {year, month, date, hour, friendId, originId} = data;
     // Javascript's Date's month is 0-based,
     // So if user specify 12(december), javascript knows it as 11 (12 - 1)
     // which is why it's month -1 below
@@ -34,7 +34,8 @@ Meetup.initiateMeetup = function(data, initiatorId) {
                                 initiator: true,
                                 status: "initiated",
                                 meetupId: meetup.id,
-                                userId: initiatorId
+                                userId: initiatorId,
+                                originId: originId
                             }),
                             db.models.meetup_user_status.create({
                                 initiator: false,
