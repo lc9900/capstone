@@ -14,7 +14,10 @@ class Test extends Component {
 
     render() {
         return (
-            <div><CalendarButton start={'12/12/2017 18:00'} end={'12/12/2017 19:00'} title={'Rendezvous'} location={'New York'}/></div>
+            <div>
+              <CalendarButton type="google" start={'20171212T140000'} end={'20171212T150000'} title={'Rendezvous'} location={'New York'}/>
+              <CalendarButton type="mac" start={'20171212T140000'} end={'20171212T150000'} title={'Rendezvous'} location={'New York'}/>
+              </div>
 
         )
     }
