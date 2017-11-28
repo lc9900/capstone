@@ -50,15 +50,16 @@ export default class CalendarButton extends Component{
     render(){
             const {start, end, title, location, type} = this.props;
             let btnText = '',
-                download = '';
+                downloadProps = {};
             if(type === 'google') {
                 btnText = 'Google Calendar';
-                return <a href={this.buildCalendarUrl()} target='_blank' className='btn btn-success'>{btnText}</a>
             }
             else {
                 btnText = 'Mac or Outlook Calendar';
-                download = 'event.ics';
-                return <a download={download} href={this.buildCalendarUrl()} target='_blank' className='btn btn-primary'>{btnText}</a>
+                downloadProps = {
+                  download: 'event.ics'
+                };
             }
+            return <a {...downloadProps} href={this.buildCalendarUrl()} target='_blank' className='btn btn-success'>{btnText}</a>
     }
 }
