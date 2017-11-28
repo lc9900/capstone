@@ -23,17 +23,18 @@ export function fetchMeetups(userId){
 	})
 	.then(meetupObjArray => {
 		meetupObjArray.forEach(i => {
-			return meetupIdArray.push(i['id'])
+			meetupIdArray.push(i['id'])
 		})
 	})
-	
-	meetupIdArray.forEach(meetupId => {
-        axios.get(`/api/meetup/${meetupId}/includeUser`)
-        .then(res => meetupIncludeUserArray.push(res.data[0]))
-	})
 	.then(result => {
-		const action = getMeetups(meetupIncludeUserArray)
-		dispatch(action)
+        return meetupIdArray.forEach(meetupId => {
+        	axios.get(`/api/meetup/${meetupId}/includeUser`)
+        	.then(res => meetupIncludeUserArray.push(res.data[0]))
+        	.then(result => {
+				const action = getMeetups(meetupIncludeUserArray)
+				dispatch(action)
+			})
+        })
 	})
   }
 }

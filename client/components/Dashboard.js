@@ -10,9 +10,6 @@ class Dashboard extends Component {
     constructor(props){
         super();
         this.state = {
-        	//put all of this user's meetups in the local state
-        	meetupIdArray: [],
-          meetupIncludeUserArray: []
 
         };
         // this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,50 +23,19 @@ class Dashboard extends Component {
     }
     
     componentDidMount(props){
-      
-      //putting all places in database into store for now. 
-      //can try to look through only places related to user later 
-      //but it involves looking at both user's places and user's meetup's places
-      const placesThunk = fetchPlaces()
-      store.dispatch(placesThunk)
-
-    	//getting all information about user with include: [{all:true}]
+      const { getAllPlaces, getUsersMeetups } = this.props;
+      getAllPlaces()
       const userId = this.props.user.id
+      getUsersMeetups(userId)
+      
+      //change
       const userInfoThunk = fetchUserInfo(userId)
       store.dispatch(userInfoThunk)
-    	
-      //this is not working
-      const userMeetupThunk = fetchMeetups(userId)
-      store.dispatch(userMeetupThunk)
-
-
-      
-      //given user id, give me a list of meetup ids and a list of meetups that include users in that meetup
-    	const meetupIdArray=[]
-      const meetupIncludeUserArray=[]
-    	axios.get(`/api/user/${userId}/meetups`)
-    	.then(res => {
-    		return res.data
-    	})
-    	.then(meetupObjArray => {
-    		meetupObjArray.forEach(i => {
-    			return meetupIdArray.push(i['id'])
-    		})
-    	})
-    	.then(result => {
-    		this.setState({meetupIdArray})
-        return meetupIdArray.forEach(meetupId => {
-          axios.get(`/api/meetup/${meetupId}/includeUser`)
-          .then(res => meetupIncludeUserArray.push(res.data[0]))
-          .then(result => this.setState({meetupIncludeUserArray}))
-        })
-    	})
-      
 
     }
     
     getAddress(placeId){
-      const grepArr = $.grep(this.props.places, function(elem){ console.log(elem, placeId);return elem.id === placeId})
+      const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
       return grepArr[0]['address']
     }
 
@@ -77,12 +43,10 @@ class Dashboard extends Component {
         //considered using card-group but decided against it as it is a new feature and not responsive
 
         const {user, places, userInfo, userMeetup} = this.props;
-        const {meetupIdArray, meetupIncludeUserArray} = this.state;
+        
         if(! user.id) return <Redirect to='/Login' />
 
         console.log('read whole object here', userInfo)
-        console.log('read whole object here', meetupIncludeUserArray)
-        console.log(userMeetup)
         
         //ideally, i want an array of objects, where each object is a meetup with category, (my name), friend's name, time, status
         //assign to null and render empty div for render on component first mount
@@ -110,7 +74,7 @@ class Dashboard extends Component {
                     let meetupFriendId
                     let meetupTime
 
-                    meetupIncludeUserArray.forEach(meetup =>{
+                    userMeetup.forEach(meetup =>{
                       if(meetup.id === thisMeetupId){
                         meetupTime = meetup.time
                         meetup['users'].forEach(participant => {
@@ -192,6 +156,12 @@ const mapState = (state) => {
 }
 const mapDispatch = (dispatch) => {
   return {
+    getAllPlaces: function(){
+      return dispatch(fetchPlaces())
+    },
+    getUsersMeetups: function(userId){
+      return dispatch(fetchMeetups(userId))
+    }
   };
 };
 
