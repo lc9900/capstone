@@ -23,6 +23,7 @@ export default function Nav(props) {
           <div className="navbar-nav">
             <NavLink className="nav-item nav-link" to="/login" activeClassName="active">Home</NavLink>
             <NavLink className="nav-item nav-link" to="/meetup" activeClassName="active">Meetup</NavLink>
+            <NavLink className="nav-item nav-link" to="/profile" activeClassName="active">Profile</NavLink>
           </div>
         </div>
       </nav>
