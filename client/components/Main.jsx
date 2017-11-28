@@ -7,7 +7,7 @@ import Login from "./Login";
 import Nav from "./Nav";
 import MapContainer from "./MapContainer";
 import NewMeetup from "./NewMeetup";
-// import { verifyUser, loadUser } from '../store';
+import Test from './Test';
 import { displayMain, loadUser, logout } from "../store";
 
 class Main extends Component {
@@ -44,6 +44,7 @@ class Main extends Component {
             <Route path="/map" component={MapContainer} />
             <Route path="/meetup" component={NewMeetup} />
             <Route path="/login" component={Login} />
+            <Route path="/test" component={Test} />
             {/*<Redirect to="/Login" />*/}
           </Switch>
         </div>
