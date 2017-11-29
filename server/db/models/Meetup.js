@@ -54,7 +54,7 @@ Meetup.updateMeetup = function(data, meetupId) {
     // If meet time is update, then need to check for scheduling conflict.
     // The check should ignore the conflict itself
     // const {year, month, date, hour, placeId, status} = data;
-    const {googleId, status, originId, userId, name, address} = data;
+    const {googleId, status, originId, userId, name, address, lat, lng} = data;
     // let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
     //     target_meetup;
     let target_meetup;
@@ -82,7 +82,7 @@ Meetup.updateMeetup = function(data, meetupId) {
             return db.models.place.findOrCreate({
                 where: { googleId },
                 defaults: {
-                    name, address
+                    name, address, lat, lng
                 }
             });
         })
