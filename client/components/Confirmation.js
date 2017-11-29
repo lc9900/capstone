@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { fetchMeetup } from "../reducers/confirmation";
 import store from "../store";
 
 class Confirmation extends Component {
@@ -7,55 +8,66 @@ class Confirmation extends Component {
     super();
   }
 
+  componentDidMount() {
+    store.dispatch(fetchMeetup(this.props.match.params.id));
+  }
+
   render() {
-    if (!this.props) {
+    if (!this.props || !this.props.friend) {
       return <div>Loading...</div>;
     }
 
-    const meetupId = Number(this.props.match.params.id);
-    const { user } = this.props;
-    console.log("user", user);
+    console.log("props", this.props);
 
-    const meetup = user.meetups.find(meetup => meetup.id === meetupId);
-    console.log("meetup", meetup);
+    const meetupId = Number(this.props.match.params.id);
+    const { user, confirmation, friend } = this.props;
+    const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
 
     return (
       <div>
         <h1>{`Confirmation Screen for ${meetupId}`}</h1>
-
+        <br />
+        <div className="card">
+          <div className="card-body">
+            <h4 className="card-title">Friend</h4>
+            <p className="card-text">{friend.name}</p>
+          </div>
+        </div>
+        <div className="card">
+          <div className="card-body">
+            <h4 className="card-title">Time</h4>
+            <p className="card-text">{currentMeetup.time}</p>
+          </div>
+        </div>
+        <br />
         <form>
-          <div className="form-group row">
-            <label className="col-sm-2 col-form-label">Friend</label>
-            <div className="col-sm-10">
-              <p className="form-control-static">Bobby</p>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-sm-2 col-form-label">Time</label>
-            <div className="col-sm-10">
-              <p className="form-control-static">{meetup.time}</p>
-            </div>
-          </div>
           <div className="form-group">
-            <label>Select Address</label>
+            <label>Select Your Point of Origin</label>
             <select className="form-control" id="selectAddress">
               {user.places.map(place => (
                 <option key={place.id}>{place.name}</option>
               ))}
             </select>
           </div>
+          <button className="btn btn-secondary">Accept Meeting</button>
         </form>
       </div>
     );
   }
 }
 
-const mapState = ({ user }) => {
-  return { user };
+const mapState = ({ user, confirmation }) => {
+  return {
+    user,
+    confirmation,
+    friend: confirmation.users
+      ? confirmation.users.find(u => u.id !== user.id)
+      : null
+  };
 };
 
 const mapDispatch = dispatch => {
-  return {};
+  return { fetchMeetup };
 };
 
 export default connect(mapState, mapDispatch)(Confirmation);
