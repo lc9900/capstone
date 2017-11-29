@@ -7,6 +7,7 @@ import axios from 'axios';
 import {daysInMonth} from '../../utils';
 import CalendarButton from './CalendarButton';
 
+
 class Test extends Component {
     constructor(){
         super();
@@ -14,9 +15,11 @@ class Test extends Component {
 
     componentDidMount() {
 
+
     }
 
     render() {
+        this.getVenue();
         return (
             <div>
 
