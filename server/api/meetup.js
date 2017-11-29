@@ -38,8 +38,7 @@ router.post('/add/:userId', (req, res, next) => {
 // year, month, date, hour, placeId, status
 // tested
 router.put('/:id', (req, res, next) => {
-    if(!validateMeetupTime(req.body)) return res.status(409).send('Scheduled Time is in the past!');
-
+    // if(!validateMeetupTime(req.body)) return res.status(409).send('Scheduled Time is in the past!');
     Meetup.updateMeetup(req.body, req.params.id * 1)
         .then(() => res.send('updated'))
         .catch(err => {
