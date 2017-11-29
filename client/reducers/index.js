@@ -31,7 +31,7 @@ export default combineReducers({
     map,
     userMeetup,
     place,
-    userDashboard
+    userDashboard,
     confirmation
 });
 
