@@ -28,10 +28,11 @@ const User = db.define('user',{
 User.login = function(credential){
   return User.findOne({
         where: credential,
-        include:[db.models.place, {
-          model: User,
-          as: 'friends'
-        }]
+        // include:[db.models.place, {
+        //   model: User,
+        //   as: 'friends'
+        // }]
+        include: [{all:true}]
     }).then(user => {
         if (user) {
             return user;
@@ -45,10 +46,11 @@ User.findUser = function(userId){
         where: {
           id: userId
         },
-        include:[db.models.place, {
-          model: User,
-          as: 'friends'
-        }]
+        // include:[db.models.place, {
+        //   model: User,
+        //   as: 'friends'
+        // }]
+        include: [{all:true}]
     }).then(user => {
         if (user) {
             return user;

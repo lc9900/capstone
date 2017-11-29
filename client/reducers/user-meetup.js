@@ -27,14 +27,14 @@ export function fetchMeetups(userId){
 		})
 	})
 	.then(result => {
-        return meetupIdArray.forEach(meetupId => {
-        	axios.get(`/api/meetup/${meetupId}/includeUser`)
-        	.then(res => meetupIncludeUserArray.push(res.data[0]))
-        	.then(result => {
-				const action = getMeetups(meetupIncludeUserArray)
-				dispatch(action)
-			})
-        })
+        let axiosList = meetupIdArray.map(meetupId => axios.get(`/api/meetup/${meetupId}/includeUser`))
+        return Promise.all(axiosList)
+        	.then(results => {
+               return results.map(result => result.data[0])
+			     })
+          .then(results => {
+            dispatch(getMeetups(results))
+          })
 	})
   }
 }
@@ -43,7 +43,8 @@ export function fetchMeetups(userId){
 //UserMeetup Reducer
 const UserMeetupReducer = function(state = [], action) {
   switch (action.type) {
-    case GET_MEETUPS : return action.meetups
+    case GET_MEETUPS : 
+      return action.meetups
     default:
       return state;
   }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchPlaces, fetchMeetups, fetchUserInfo } from '../store';
 import { Redirect } from 'react-router-dom';
-// import * as _ from 'lodash';
+import * as _ from 'lodash';
 import axios from 'axios';
 // import {daysInMonth} from '../../utils';
 
@@ -27,39 +27,36 @@ class Dashboard extends Component {
       getAllPlaces()
       const userId = this.props.user.id
       getUsersMeetups(userId)
-      
-      //change
-      const userInfoThunk = fetchUserInfo(userId)
-      store.dispatch(userInfoThunk)
 
     }
     
     getAddress(placeId){
-      const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
-      return grepArr[0]['address']
+      if(this.props.places.lengh > 0){
+        const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
+        return grepArr[0]['address']  
+      }
     }
 
     render(){
         //considered using card-group but decided against it as it is a new feature and not responsive
 
-        const {user, places, userInfo, userMeetup} = this.props;
-        
+        const {user, place, userMeetup} = this.props;
+
         if(! user.id) return <Redirect to='/Login' />
 
-        console.log('read whole object here', userInfo)
-        
         //ideally, i want an array of objects, where each object is a meetup with category, (my name), friend's name, time, status
         //assign to null and render empty div for render on component first mount
-        const meetupsArray = userInfo['meetups'] ? userInfo['meetups']: null
-        const friendsArray = userInfo['friends'] ? userInfo['friends']: null
-        const statusArray = userInfo['status']? userInfo['status']: null
+        let meetupsArray = user['meetups'] ? user['meetups']: null
+        meetupsArray = _.orderBy(meetupsArray, ['time'],['desc'])
+        const friendsArray = user['friends'] ? user['friends']: null
+        const statusArray = user['status']? user['status']: null
         
         // "new incoming requests" - status: initiated, initiator: false
         // "Pending Outgoing Requests" - status: initiated, initiator: true
         // "accepted rendezvous" - 'received', 'pending', 'accepted', 
         // can make fourth catogory - 'canceled'
         // only show in "history" - 'rejected', 
-
+        
         return (
           <div>
           	<div className="container-fluid">
@@ -73,6 +70,8 @@ class Dashboard extends Component {
                     
                     let meetupFriendId
                     let meetupTime
+
+                    // const userMeetupArray = userMeetup[0]
 
                     userMeetup.forEach(meetup =>{
                       if(meetup.id === thisMeetupId){
@@ -151,7 +150,6 @@ const mapState = (state) => {
     user: state.user,
     places: state.place,
     userMeetup: state.userMeetup,
-    userInfo: state.userDashboard
   }
 }
 const mapDispatch = (dispatch) => {
