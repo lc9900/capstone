@@ -125,7 +125,7 @@ class Dashboard extends Component {
 					          			<p className="card-text">time: {meetupTime}</p>
 					          			<p className="card-text">status: {meetupStatus}</p>
                           <p className="card-text">place: {meetup.placeId ? this.getAddress(meetup.placeId) : placeMessage}</p>
-					      				  <a href="#" className="btn btn-light">Button</a>
+					      				  <a href={`confirmation/${meetup.id}`} className="btn btn-light">Button</a>
                           <p className="card-text"><small className="text-muted">meetup id: {meetup.id} </small></p>
 					          		</div>
 					          	</div>
