@@ -2,6 +2,7 @@ nav {
   background-color: #f2f2f2;
   padding: 8px;
   margin-top: 5px;
+  margin-bottom: 30px;
 }
 
 .navbar-brand {
@@ -64,4 +65,32 @@ body {
   font-family: Roboto;
   font-size: 13px;
   font-weight: 300;
+}
+
+/* dashboard styles */
+.meetup{
+  width: 50%;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+
+.card{
+  height: 350px;
+}
+
+.incoming{
+  background-color: #B3C100;
+}
+
+.outgoing{
+  background-color: #B7B8B6;
+}
+
+.accepted{
+  background-color: #4CB5F5;
+}
+
+.btn-light{
+  border-color: black;
 }

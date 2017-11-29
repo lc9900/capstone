@@ -13,6 +13,15 @@ router.get("/:id", (req, res, next) => {
         .catch(next);
 });
 
+// get meetup with both users included in the query
+router.get('/:id/includeUser', (req, res, next) => {
+    Meetup.findAll({where: {id:req.params.id * 1}, include: User})
+    .then(meetup => {
+        res.json(meetup);
+    })
+    .catch(next);
+})
+
 // Add New Meetup.
 // The method checks if there's already a meetup during that time.
 // req.body should have --
