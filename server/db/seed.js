@@ -31,15 +31,16 @@ const seed = () => {
     })
     .then(() => {
         return Promise.all([
-            Place.create({name: 'Home', address: '220 W 121st St, New York, NY 10027'}),
-            Place.create({name: 'Home', address: '20 W 102nd St, New York, NY 10025'}),
-            Place.create({name: 'Home', address: '1411 Broadway, New York, NY 10018'}),
-            Place.create({name: 'Home', address: '75 Maiden Ln, New York, NY 10038'}),
+            Place.create({name: 'Home', address: '220 W 121st St, New York, NY 10027', googleId:'EjEyMjAgVyAxMjFzdCBTdCwgTmV3IFlvcmssIE5ZIDEwMDI3LCBVbml0ZWQgU3RhdGVz'}),
 
-            Place.create({name: 'Work', address: '25 Park Pl, New York, NY 10007'}),
-            Place.create({name: 'Work', address: '199 Chambers St, New York, NY 10007'}),
-            Place.create({name: 'Work', address: '282-220 W 12th St, New York, NY 10014'}),
-            Place.create({name: 'Work', address: '113 W 60th St, New York, NY 10023'})
+            Place.create({name: 'Home', address: '20 W 102nd St, New York, NY 10025', googleId: 'ChIJz4_pciH2wokR5EB2oUdIe58'}),
+            Place.create({name: 'Home', address: '1411 Broadway, New York, NY 10018', googleId: 'ChIJuwlnE6tZwokRazjpw03G7t4'}),
+            Place.create({name: 'Home', address: '75 Maiden Ln, New York, NY 10038', googleId: 'Ei83NSBNYWlkZW4gTG4sIE5ldyBZb3JrLCBOWSAxMDAzOCwgVW5pdGVkIFN0YXRlcw'}),
+
+            Place.create({name: 'Work', address: '25 Park Pl, New York, NY 10007', googleId: 'Ei0yNSBQYXJrIFBsLCBOZXcgWW9yaywgTlkgMTAwMDcsIFVuaXRlZCBTdGF0ZXM'}),
+            Place.create({name: 'Work', address: '199 Chambers St, New York, NY 10007', googleId: 'EjIxOTkgQ2hhbWJlcnMgU3QsIE5ldyBZb3JrLCBOWSAxMDAwNywgVW5pdGVkIFN0YXRlcw'}),
+            Place.create({name: 'Work', address: '282-220 W 12th St, New York, NY 10014', googleId: 'EjQyODItMjIwIFcgMTJ0aCBTdCwgTmV3IFlvcmssIE5ZIDEwMDE0LCBVbml0ZWQgU3RhdGVz'}),
+            Place.create({name: 'Work', address: '113 W 60th St, New York, NY 10023', googleId: 'ChIJd5vpMl9YwokRCRMA410J6fc'})
         ]);
     })
     .then(places => {

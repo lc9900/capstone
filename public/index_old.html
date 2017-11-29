@@ -92,9 +92,14 @@
 
       AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
         var me = this;
+        console.log("Autocomplete is: ", autocomplete);
         autocomplete.bindTo('bounds', this.map);
         autocomplete.addListener('place_changed', function() {
+          console.log("Autocomplete is: ", autocomplete);
+
           var place = autocomplete.getPlace();
+          console.log(place.place_id);
+          console.log(typeof place.place_id)
           if (!place.place_id) {
             window.alert("Please select an option from the dropdown list.");
             return;
@@ -130,7 +135,7 @@
           let logged = false;
           for (var i = 0; i < steps.length; i++) {
             const stepDuration = steps[i].duration.value;
-            newAccumDuration = prevAccumDuration + stepDuration; 
+            newAccumDuration = prevAccumDuration + stepDuration;
             if (newAccumDuration > tripDuration/2 && !logged) {
               console.log('** Halfway point on leg ' + i);
               const stepStartLat = steps[i].start_location.lat();
@@ -144,7 +149,7 @@
               midpointLng =  stepStartLng + (stepEndLng - stepStartLng) * percentIntoStepForMidway;
               console.log("midpoint:", midpointLat, midpointLng)
               logged = true;
-            } 
+            }
             prevAccumDuration = newAccumDuration;
             console.log('Leg ' + i + " (secs) = "+ stepDuration + ", accumulated (secs) = " + prevAccumDuration)
           }
