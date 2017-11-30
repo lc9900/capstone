@@ -1,15 +1,52 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchMeetup } from "../reducers/confirmation";
+import { fetchPlaces } from "../reducers/place";
 import store from "../store";
 
 class Confirmation extends Component {
   constructor() {
     super();
+
+    this.state = {
+      userLocationId: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.calculateMid = this.calculateMid.bind(this);
   }
 
   componentDidMount() {
     store.dispatch(fetchMeetup(this.props.match.params.id));
+    store.dispatch(fetchPlaces());
+  }
+
+  calculateMid(loc1, loc2) {
+    return { lat: (loc1.lat + loc2.lat) / 2, lng: (loc1.lng + loc2.lng) / 2 };
+  }
+
+  handleChange(e) {
+    this.setState({ userLocationId: e.target.value });
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+
+    const places = this.props.place;
+    const initiator = this.props.confirmation.meetup_user_statuses.find(
+      user => user.initiator
+    );
+    const initiatorLocation = places.find(
+      place => place.id === initiator.originId
+    );
+    const userLocation = places.find(
+      place => place.id === Number(this.state.userLocationId)
+    );
+
+    console.log("userLocation", userLocation);
+
+    const mid = this.calculateMid(initiatorLocation, userLocation);
   }
 
   render() {
@@ -21,6 +58,7 @@ class Confirmation extends Component {
 
     const meetupId = Number(this.props.match.params.id);
     const { user, confirmation, friend } = this.props;
+    const { handleChange, handleClick } = this;
     const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
 
     return (
@@ -43,23 +81,34 @@ class Confirmation extends Component {
         <form>
           <div className="form-group">
             <label>Select Your Point of Origin</label>
-            <select className="form-control" id="selectAddress">
+            <select
+              className="form-control"
+              id="selectAddress"
+              onChange={handleChange}
+              value={this.state.userLocationId}
+            >
+              <option value="">-- Select --</option>
               {user.places.map(place => (
-                <option key={place.id}>{place.name}</option>
+                <option key={place.id} value={place.id}>
+                  {place.name}
+                </option>
               ))}
             </select>
           </div>
-          <button className="btn btn-secondary">Accept Meeting</button>
+          <button className="btn btn-secondary" onClick={handleClick}>
+            Accept Meeting
+          </button>
         </form>
       </div>
     );
   }
 }
 
-const mapState = ({ user, confirmation }) => {
+const mapState = ({ user, confirmation, place }) => {
   return {
     user,
     confirmation,
+    place,
     friend: confirmation.users
       ? confirmation.users.find(u => u.id !== user.id)
       : null
