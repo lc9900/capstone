@@ -28,14 +28,27 @@ export function setMeetingDestination(location) {
     };
 }
 
-// THUNK
+//Thunk Creators
+export function fetchMeetingDestination(location) {
+    return function thunk(dispatch) {
+        const { lat, lng } = location;
+        return axios
+            .get(`/api/venue/search?location=${lat},${lng}`)
+            .then(res =>
+                dispatch(setMeetingDestination(res.data.geometry.location))
+            )
+            .catch(err => {
+                throw err;
+            });
+    };
+}
 
 // REDUCER
 export default function Map(
     locations = {
-        userStart: { lat: 40.705312, lng: -74.009197 },
-        friendStart: { lat: 40.802051, lng: -73.957088 },
-        meetingDestination: { lat: 40.762935, lng: -73.984957 }
+        userStart: {},
+        friendStart: {},
+        meetingDestination: {}
     },
     action
 ) {

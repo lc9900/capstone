@@ -6,7 +6,11 @@ import store from "../store";
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props;
+    this.state = {
+      showInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
+    };
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
@@ -26,11 +30,9 @@ export class MapContainer extends Component {
       return <div>Loading...</div>;
     }
 
-    console.log("current state", this.state);
-
     const { onMarkerClick } = this;
-    const { google } = this.props;
-    const { showInfoWindow, activeMarker, selectedPlace, map } = this.state;
+    const { google, map } = this.props;
+    const { showInfoWindow, activeMarker, selectedPlace } = this.state;
     const style = {
       width: "70%",
       height: "70%",
@@ -39,7 +41,7 @@ export class MapContainer extends Component {
 
     return (
       <div>
-        <h1>MapContainer</h1>
+        <h1>Map!</h1>
         <Map
           google={google}
           style={style}
@@ -81,10 +83,7 @@ export class MapContainer extends Component {
 const mapState = ({ user, map }) => {
   return {
     user,
-    map,
-    showInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {}
+    map
   };
 };
 
@@ -94,6 +93,6 @@ const mapDispatch = dispatch => {
 
 export default connect(mapState, mapDispatch)(
   GoogleApiWrapper({
-    apiKey: process.env.GOOGLE_MAPS
+    apiKey: "AIzaSyAopJDwUG1vlrsZg94qP6yuPtzapUgYw8g"
   })(MapContainer)
 );
