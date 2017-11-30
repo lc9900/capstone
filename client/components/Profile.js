@@ -49,17 +49,7 @@ class Profile extends Component {
           				
                   <h2>Add a new address</h2>
 
-                  <div>
-                    <form id="new-address-form" onSubmit={props.handleSubmit}>
-                      <div className="input-group">
-                        <input className="form-control" type="text" name="newAddress" value={props.newAddress} placeHolder="address" onChange={props.handleChange} />
-                        <span className="input-group-btn">
-                          <button className="btn" type="submit">Submit</button>
-                        </span>
-                      </div>
-                    </form>
-                  </div>                  
-
+                  
                   <h2>Your addresses</h2>
                   {userPlaces ? userPlaces.map(place=>{
                     return(<div key="place.id">
@@ -80,6 +70,18 @@ class Profile extends Component {
 }
 
 //////////////////////////////////////////////////////
+
+// <div>
+//                     <form id="new-address-form" onSubmit={props.handleSubmit}>
+//                       <div className="input-group">
+//                         <input className="form-control" type="text" name="newAddress" value={props.newAddress} placeHolder="address" onChange={props.handleChange} />
+//                         <span className="input-group-btn">
+//                           <button className="btn" type="submit">Submit</button>
+//                         </span>
+//                       </div>
+//                     </form>
+//                   </div>                  
+
 
 const mapState = (state) => {
   return {
