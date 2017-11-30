@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchMeetup } from "../reducers/confirmation";
 import { fetchPlaces } from "../reducers/place";
+import {
+  setUserStart,
+  setFriendStart,
+  fetchMeetingDestination
+} from "../reducers/map";
+import MapContainer from "./MapContainer";
 import store from "../store";
 
 class Confirmation extends Component {
@@ -9,7 +15,8 @@ class Confirmation extends Component {
     super();
 
     this.state = {
-      userLocationId: ""
+      userLocationId: "",
+      showMap: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,9 +51,20 @@ class Confirmation extends Component {
       place => place.id === Number(this.state.userLocationId)
     );
 
-    console.log("userLocation", userLocation);
+    //update store
+    store.dispatch(
+      setUserStart({ lat: userLocation.lat, lng: userLocation.lng })
+    );
+    store.dispatch(
+      setFriendStart({ lat: initiatorLocation.lat, lng: initiatorLocation.lng })
+    );
+    store.dispatch(
+      fetchMeetingDestination(
+        this.calculateMid(initiatorLocation, userLocation)
+      )
+    );
 
-    const mid = this.calculateMid(initiatorLocation, userLocation);
+    this.setState({ showMap: true });
   }
 
   render() {
@@ -99,6 +117,7 @@ class Confirmation extends Component {
             Accept Meeting
           </button>
         </form>
+        {this.state.showMap && <MapContainer />}
       </div>
     );
   }
@@ -115,8 +134,4 @@ const mapState = ({ user, confirmation, place }) => {
   };
 };
 
-const mapDispatch = dispatch => {
-  return { fetchMeetup };
-};
-
-export default connect(mapState, mapDispatch)(Confirmation);
+export default connect(mapState)(Confirmation);
