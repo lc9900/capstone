@@ -1,12 +1,15 @@
 const db = require("./");
 const { Sequelize } = db;
+const axios = require('axios');
 
 //Models
 const { User, Place, Meetup, MeetupUserStatus } = require("./models");
 let seedUsers = [],
     seedMeetup,
     seedHome = [],
-    seedWork = [];
+    seedWork = [],
+    seedPlaces = [],
+    GOOGLE_MAPS="AIzaSyAopJDwUG1vlrsZg94qP6yuPtzapUgYw8g";
 
 db.sync({ force: true }).then(() => {
     seed();
@@ -52,23 +55,23 @@ const seed = () => {
                         address: "220 W 121st St, New York, NY 10027",
                         googleId:
                             "EjEyMjAgVyAxMjFzdCBTdCwgTmV3IFlvcmssIE5ZIDEwMDI3LCBVbml0ZWQgU3RhdGVz",
-                        lat: 40.8,
-                        lng: -74.1
+                        lat: "40.8065406",
+                        lng: "-73.9513683"
                     }),
 
                     Place.create({
                         name: "Home",
                         address: "20 W 102nd St, New York, NY 10025",
                         googleId: "ChIJz4_pciH2wokR5EB2oUdIe58",
-                        lat: 40.7,
-                        lng: -74.0
+                        lat: "40.7958548",
+                        lng: "-73.9632335"
                     }),
                     Place.create({
                         name: "Home",
                         address: "1411 Broadway, New York, NY 10018",
                         googleId: "ChIJuwlnE6tZwokRazjpw03G7t4",
-                        lat: 40.6,
-                        lng: -74.2
+                        lat:  "40.7542267",
+                        lng:  "-73.9875942"
                     }),
                     Place.create({
                         name: "Home",
@@ -97,7 +100,7 @@ const seed = () => {
                     }),
                     Place.create({
                         name: "Work",
-                        address: "282-220 W 12th St, New York, NY 10014",
+                        address: "220 W 12th St, New York, NY 10014",
                         googleId:
                             "EjQyODItMjIwIFcgMTJ0aCBTdCwgTmV3IFlvcmssIE5ZIDEwMDE0LCBVbml0ZWQgU3RhdGVz",
                         lat: 40.79,
@@ -113,6 +116,7 @@ const seed = () => {
                 ]);
             })
             .then(places => {
+                seedPlaces = places;
                 seedHome = places.filter(place => place.name === "Home");
                 seedWork = places.filter(place => place.name === "Work");
                 return Promise.all([
@@ -121,6 +125,28 @@ const seed = () => {
                     seedUsers[2].addPlace([seedHome[2], seedWork[2]]),
                     seedUsers[3].addPlace([seedHome[3], seedWork[3]])
                 ]);
+            })
+            .then(() => {
+                let promises = seedPlaces.map(place => axios
+                                            .get(
+                                              `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                                                place.address
+                                              )}&key=${GOOGLE_MAPS}`
+                                            )
+                                  );
+                return Promise.all(promises);
+            })
+            .then(results => {
+                  let google_places = results.map(result => result.data);
+
+                  let promises = seedPlaces.map((place, idx) => {
+                    return place.update({
+                        lat: google_places[idx].results[0].geometry.location.lat,
+                        lng: google_places[idx].results[0].geometry.location.lng
+                    });
+                  });
+
+                  return Promise.all(promises);
             })
             // For meetup seeding
             .then(() => {
