@@ -53,33 +53,53 @@ Meetup.initiateMeetup = function(data, initiatorId) {
 Meetup.updateMeetup = function(data, meetupId) {
     // If meet time is update, then need to check for scheduling conflict.
     // The check should ignore the conflict itself
-    const {year, month, date, hour, placeId, status} = data;
-    let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
-        target_meetup;
+    // const {year, month, date, hour, placeId, status} = data;
+    const {googleId, status, originId, userId, name, address, lat, lng} = data;
+    // let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
+    //     target_meetup;
+    let target_meetup;
 
     return Meetup.findById(meetupId)
         .then(meetup => {
             target_meetup = meetup;
             return meetup.getUsers();
         })
-        .then(users => {
-            let userPromises = users.map(user => Meetup.checkConflict(meetTime, user.id, meetupId));
-            return Promise.all(userPromises);
-        })
-        .then(conflicts => {
-            // If checkConflict returns true for anyone, then throw error and
-            // not update
-            if(conflicts.indexOf(true) !== -1 ) {
-                throw 'Scheduling conflict(s) found!';
-            }
+        // .then(users => {
+        //     let userPromises = users.map(user => Meetup.checkConflict(meetTime, user.id, meetupId));
+        //     return Promise.all(userPromises);
+        // })
+        // .then(conflicts => {
+        //     // If checkConflict returns true for anyone, then throw error and
+        //     // not update
+        //     if(conflicts.indexOf(true) !== -1 ) {
+        //         throw 'Scheduling conflict(s) found!';
+        //     }
 
-            // If no conflict is found, then update Meetup model
-            return target_meetup.update({time: meetTime, placeId});
+        //     // If no conflict is found, then update Meetup model
+        //     return target_meetup.update({time: meetTime, placeId});
+        // })
+        .then(() => {
+            return db.models.place.findOrCreate({
+                where: { googleId },
+                defaults: {
+                    name, address, lat, lng
+                }
+            });
+        })
+        .then(([place, created]) => {
+            return target_meetup.update({placeId: place.id});
         })
         .then(() => {
             // Got to update status
             return db.models.meetup_user_status.update({status}, {
                 where: { meetupId: target_meetup.id }
+            })
+        }).then(() => {
+            return db.models.meetup_user_status.update({originId}, {
+                where: {
+                    meetupId: target_meetup.id,
+                    userId: userId
+                }
             })
         })
 }
