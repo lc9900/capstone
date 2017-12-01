@@ -57,11 +57,11 @@ router.put("/:id", (req, res, next) => {
     let recipients = [user.phone, friend.phone];
     let message = `Rendezvous made for ${user.name} and ${friend.name} at ${startTime} @ ${name}`;
     Meetup.updateMeetup(req.body, req.params.id * 1)
-        .then(() => {
-            let text = new Sms();
-            return text.sendBulk(recipients, message);
+        // .then(() => {
+        //     let text = new Sms();
+        //     return text.sendBulk(recipients, message);
 
-        })
+        // })
         .then(() => {
             return res.send("updated");
         })
