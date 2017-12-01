@@ -10,6 +10,8 @@ import {
 import MapContainer from "./MapContainer";
 import store, {fetchVenue} from "../store";
 import axios from 'axios';
+import CalendarButton from './CalendarButton';
+import moment from 'moment';
 
 class Confirmation extends Component {
   constructor() {
@@ -28,6 +30,7 @@ class Confirmation extends Component {
   componentDidMount() {
     store.dispatch(fetchMeetup(this.props.match.params.id));
     store.dispatch(fetchPlaces());
+    // store.dispatch(fetchExistingVenue(this.props.match.params.id * 1));
   }
 
   calculateMid(loc1, loc2) {
@@ -133,6 +136,44 @@ class Confirmation extends Component {
     const { user, confirmation, friend, venue } = this.props;
     const { handleChange, handleClick } = this;
     const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
+
+    // Sample time output -- it's actually a string -- 2017-12-01T04:00:00.000Z
+    // console.log("time is: ", typeof currentMeetup.time)
+    let convertedStartTime = moment(currentMeetup.time).format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
+    // console.log("new time is: ", convertedStartTime)
+
+    let convertedEndTime = moment(currentMeetup.time).add(1, 'hours').format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
+    // console.log("end time is: ", convertedEndTime)
+    let displayStartTime = moment(currentMeetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
+    // console.log("display time is: ", displayStartTime)
+
+    if (currentMeetup.placeId) {
+      return (
+          <div>
+            <h1>{`Confirmation Screen for ${meetupId}`}</h1>
+            <br />
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Friend</h4>
+                <p className="card-text">{friend.name}</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Time</h4>
+                <p className="card-text">{displayStartTime}</p>
+              </div>
+            </div>
+            <br />
+            <h2>{currentMeetup.place.name}</h2>
+            <CalendarButton type="google" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+            <br/>
+            <br/>
+            <CalendarButton type="mac" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+            {this.state.showMap && <MapContainer />}
+          </div>
+        );
+    }
 
     return (
       <div>

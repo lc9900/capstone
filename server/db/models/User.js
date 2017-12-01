@@ -32,7 +32,10 @@ User.login = function(credential) {
         //   model: User,
         //   as: 'friends'
         // }]
-        include: [{all:true}]
+        include: [{all:true}, {
+          model: db.models.meetup,
+          include: [db.models.place]
+        }]
     }).then(user => {
         if (user) {
             return user;
@@ -50,7 +53,10 @@ User.findUser = function(userId) {
         //   model: User,
         //   as: 'friends'
         // }]
-        include: [{all:true}]
+        include: [{all:true}, {
+          model: db.models.meetup,
+          include: [db.models.place]
+        }]
     }).then(user => {
         if (user) {
             return user;

@@ -35,6 +35,12 @@ export function fetchVenue(location) {
     };
 }
 
+// export function fetchExistingVenue(meetupId) {
+//     return function thunk(dispatch) {
+
+//     }
+// }
+
 // REDUCER
 export default function Venue(
     venue = {
