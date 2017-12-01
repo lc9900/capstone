@@ -150,10 +150,36 @@ class Confirmation extends Component {
     let displayStartTime = moment(currentMeetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
     // console.log("display time is: ", displayStartTime)
 
+    const initiator = this.props.confirmation.meetup_user_statuses.find(
+      user => user.initiator
+    );
+
+    // if initiator's id is the same as current user's id, then don't allow changing of origin
+    if(initiator.userId === user.id) {
+      return (
+          <div>
+            <h1>{`Pending friend's response for ${meetupId}`}</h1>
+            <br />
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Friend</h4>
+                <p className="card-text">{friend.name}</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Time</h4>
+                <p className="card-text">{displayStartTime}</p>
+              </div>
+            </div>
+          </div>
+      );
+    }
+
     if (currentMeetup.placeId) {
       return (
           <div>
-            <h1>{`Confirmation Screen for ${meetupId}`}</h1>
+            <h1>{`Accepted Rendezvous for ${meetupId}`}</h1>
             <br />
             <div className="card">
               <div className="card-body">
@@ -180,7 +206,7 @@ class Confirmation extends Component {
 
     return (
       <div>
-        <h1>{`Confirmation Screen for ${meetupId}`}</h1>
+        <h1>{`Confirmation for ${meetupId}`}</h1>
         <br />
         <div className="card">
           <div className="card-body">
