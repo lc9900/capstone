@@ -79,8 +79,12 @@ class Confirmation extends Component {
   handleClick(e) {
     e.preventDefault();
     // {googleId, status, originId, userId, name, address, lat, lng}
-    const {venue, user, confirmation} = this.props;
+    const {venue, user, confirmation, friend} = this.props;
     const {userLocationId} = this.state;
+    const meetupId = Number(this.props.match.params.id);
+    const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
+    let displayStartTime = moment(currentMeetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0];
+
     let content = {
       googleId: venue.googleId,
       status: 'accepted',
@@ -89,11 +93,14 @@ class Confirmation extends Component {
       name: venue.name,
       address: venue.address,
       lat: venue.lat,
-      lng: venue.lng
+      lng: venue.lng,
+      user: {name: user.name, phone: user.phone},
+      friend: {name: friend.name, phone: friend.phone},
+      startTime: displayStartTime
     };
 
     console.log(content);
-    console.log(confirmation.id);
+    // console.log(confirmation.id);
     axios.put(`/api/meetup/${confirmation.id}`, content)
         .then(result => {
           // A hack to make the page refresh
