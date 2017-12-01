@@ -3,6 +3,7 @@ import axios from 'axios';
 
 //Action Types
 const GET_PLACES = 'GET_PLACES';
+const POST_PLACE = 'POST_PLACE';
 
 //Action Creators
 export const getPlaces = (places) => {
@@ -12,7 +13,15 @@ export const getPlaces = (places) => {
   }
 };
 
+export const postPlace = (place) => {
+  return{
+    type: POST_ADDRESS,
+    place
+  }
+};
+
 //Thunk Creators
+//this puts all places in store
 export function fetchPlaces(){
   return function thunk(dispatch){
 	return axios.get(`/api/place`)
@@ -24,6 +33,17 @@ export function fetchPlaces(){
 		dispatch(action)
 	})
   }
+};
+
+export function addPlace(placeObj){
+  return function thunk(dispatch){
+    return axios.post(`/api/place`, {address, name}) //what is address object? i think i need to figure that out
+    .then(res => res.data)
+    .then(result => {
+      const action = postPlace(result)
+      dispatch(action)
+    })
+  }
 }
 
 		
@@ -31,7 +51,10 @@ export function fetchPlaces(){
 //UserMeetup Reducer
 const PlaceReducer = function(state = [], action) {
   switch (action.type) {
-    case GET_PLACES : return action.places
+    case GET_PLACES : 
+      return action.places
+    case POST_ADDRESS:
+      return [...state, action.address]
     default:
       return state;
   }
