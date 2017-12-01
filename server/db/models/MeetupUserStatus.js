@@ -1,4 +1,4 @@
-const db = require('../');
+const db = require("../");
 const { Sequelize } = db;
 
 // Status of the meetup per user
@@ -9,9 +9,17 @@ const { Sequelize } = db;
 // * Accepted (all) -- When a meetup recommendation is accepted by all party.
 // * Rejected (all) -- no agreement is reached. Or the Friend declined a meetup request.
 // * Canceled (all) -- when one party cancels the meetup.
-const MeetupUserStatus = db.define('meetup_user_status', {
-    initiator: Sequelize.BOOLEAN,
-    status: Sequelize.ENUM('initiated', 'received', 'pending', 'accepted', 'rejected', 'canceled')
+const MeetupUserStatus = db.define("meetup_user_status", {
+  initiator: Sequelize.BOOLEAN,
+  status: Sequelize.ENUM(
+    "initiated",
+    "received",
+    "pending",
+    "accepted",
+    "rejected",
+    "canceled"
+  ),
+  placeIds: Sequelize.ARRAY(Sequelize.INTEGER)
 });
 
 module.exports = MeetupUserStatus;
