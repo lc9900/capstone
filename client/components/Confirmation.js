@@ -9,6 +9,7 @@ import {
 } from "../reducers/map";
 import MapContainer from "./MapContainer";
 import store, {fetchVenue} from "../store";
+import axios from 'axios';
 
 class Confirmation extends Component {
   constructor() {
@@ -17,7 +18,6 @@ class Confirmation extends Component {
     this.state = {
       userLocationId: "",
       showMap: false,
-      showVenue: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -75,6 +75,25 @@ class Confirmation extends Component {
 
   handleClick(e) {
     e.preventDefault();
+    // {googleId, status, originId, userId, name, address, lat, lng}
+    const {venue, user, confirmation} = this.props;
+    const {userLocationId} = this.state;
+    let content = {
+      googleId: venue.googleId,
+      status: 'accepted',
+      originId: userLocationId,
+      userId: user.id,
+      name: venue.name,
+      address: venue.address,
+      lat: venue.lat,
+      lng: venue.lng
+    };
+
+    console.log(content);
+    console.log(confirmation.id);
+    axios.put(`/api/meetup/${confirmation.id}`, content)
+        .then(result => console.log(result.data))
+        .catch(err => { throw err; });
 
     // const places = this.props.place;
     // const initiator = this.props.confirmation.meetup_user_statuses.find(
