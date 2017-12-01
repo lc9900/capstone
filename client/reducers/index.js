@@ -39,3 +39,5 @@ export * from "./user";
 export * from "./user-meetup";
 export * from "./place";
 export * from "./user-dashboard";
+export * from "./map";
+export * from "./confirmation";
