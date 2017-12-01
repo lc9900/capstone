@@ -8,7 +8,7 @@ import {
   fetchMeetingDestination
 } from "../reducers/map";
 import MapContainer from "./MapContainer";
-import store, {fetchVenue} from "../store";
+import store, {fetchVenue, loadUser} from "../store";
 import axios from 'axios';
 import CalendarButton from './CalendarButton';
 import moment from 'moment';
@@ -95,7 +95,10 @@ class Confirmation extends Component {
     console.log(content);
     console.log(confirmation.id);
     axios.put(`/api/meetup/${confirmation.id}`, content)
-        .then(result => console.log(result.data))
+        .then(result => {
+          // A hack to make the page refresh
+          store.dispatch(loadUser());
+        })
         .catch(err => { throw err; });
 
     // const places = this.props.place;

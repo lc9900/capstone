@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { User, Meetup, MeetupUserStatus } = require("../db/models");
+// const Sms = require("../../utils/sms");
 
 module.exports = router;
 
@@ -54,7 +55,9 @@ router.put("/:id", (req, res, next) => {
     //     return res.status(409).send("Scheduled Time is in the past!");
 
     Meetup.updateMeetup(req.body, req.params.id * 1)
-        .then(() => res.send("updated"))
+        .then(() => {
+            res.send("updated");
+        })
         .catch(err => {
             res.status(409).send(err);
         });
