@@ -15,7 +15,7 @@ export const getPlaces = (places) => {
 
 export const postPlace = (place) => {
   return{
-    type: POST_ADDRESS,
+    type: POST_PLACE,
     place
   }
 };
@@ -37,7 +37,8 @@ export function fetchPlaces(){
 
 export function addPlace(placeObj){
   return function thunk(dispatch){
-    return axios.post(`/api/place`, {address, name}) //what is address object? i think i need to figure that out
+    console.log('addPlace thunk')
+    return axios.post(`/api/place`, placeObj) //what is address object? i think i need to figure that out
     .then(res => res.data)
     .then(result => {
       const action = postPlace(result)
@@ -53,7 +54,7 @@ const PlaceReducer = function(state = [], action) {
   switch (action.type) {
     case GET_PLACES : 
       return action.places
-    case POST_ADDRESS:
+    case POST_PLACE:
       return [...state, action.address]
     default:
       return state;

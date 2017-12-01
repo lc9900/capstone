@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { fetchPlaces, fetchMeetups, fetchUserInfo } from '../store';
+import { fetchPlaces, createPlaceName, createAddress, addPlace } from '../store';
 import { Redirect } from 'react-router-dom';
 // import * as _ from 'lodash';
 import axios from 'axios';
@@ -50,23 +50,26 @@ class Profile extends Component {
                   <h2>Add a new address</h2>
 
                     <div>
-                      <form id="new-address-form" onSubmit={props.handleSubmit}>
+                      <form id="new-address-form" onSubmit={this.props.handleSubmit}>
                         <div className="input-group">
-                          <input className="form-control" type="text" name="newPlaceName" value={props.newPlaceName} placeHolder="nickname" onChange={props.handlePlaceNameChange} />
-                          <input className="form-control" type="text" name="newAddress" value={props.newAddress} placeHolder="address" onChange={props.handleAddressChange} />
+                          <input className="form-control nickname-form" type="text" name="newPlaceName" value={this.props.newPlaceName} placeholder="nickname" onChange={this.props.handlePlaceNameChange} />
+                          <input className="form-control address-form" type="text" name="newAddress" value={this.props.newAddress} placeholder="address" onChange={this.props.handleAddressChange} />
                           <span className="input-group-btn">
                             <button className="btn" type="submit">Submit</button>
                           </span>
                         </div>
                       </form>
                     </div>   
-                                 
+                             
+                  <hr/>
+
                   <h2>Your addresses</h2>
                   {userPlaces ? userPlaces.map(place=>{
-                    return(<div key="place.id">
+                    return(<div key={`${place.id}`}>
                         <div>id: {place.id}</div>
                         <div>address: {place.address}</div>
                         <div>(good to have) on click display on map?</div>
+                        <hr/>
                       </div>)
                   }):<div></div>}
                   <h2>Map somewhere?</h2>
@@ -83,10 +86,13 @@ class Profile extends Component {
 //////////////////////////////////////////////////////
 
 
+
 const mapState = (state) => {
   return {
     user: state.user,
     places: state.place,
+    newPlaceName: state.newPlaceName,
+    newAddress: state.newAddress
   }
 }
 const mapDispatch = (dispatch) => {
@@ -102,7 +108,7 @@ const mapDispatch = (dispatch) => {
     },
     handleSubmit: function(e){
       e.preventDefault()
-      dispatch(postAddress({address: e.target.newAddress.value, name: e.target.newPlaceName.value}))
+      dispatch(addPlace({address: e.target.newAddress.value, name: e.target.newPlaceName.value}))
       dispatch(createAddress(''))
       dispatch(createPlaceName(''))
     }

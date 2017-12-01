@@ -13,7 +13,7 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
   const address = req.body.address;
   const name = req.body.name;
-
+  console.log('in post api')
   axios
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(

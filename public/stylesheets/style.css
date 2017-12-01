@@ -94,3 +94,13 @@ body {
 .btn-light{
   border-color: black;
 }
+
+/*profile styles*/
+
+.nickname-form{
+  width: 100px;
+}
+
+.address-form{
+  width: 400px; 
+}
