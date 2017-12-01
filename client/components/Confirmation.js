@@ -155,7 +155,7 @@ class Confirmation extends Component {
     );
 
     // if initiator's id is the same as current user's id, then don't allow changing of origin
-    if(initiator.userId === user.id) {
+    if(initiator.userId === user.id && initiator.status === 'initiated') {
       return (
           <div>
             <h1>{`Pending friend's response for ${meetupId}`}</h1>
