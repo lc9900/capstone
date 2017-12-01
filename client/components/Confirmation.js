@@ -199,7 +199,7 @@ class Confirmation extends Component {
             <br/>
             <br/>
             <CalendarButton type="mac" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
-            {this.state.showMap && <MapContainer />}
+            <MapContainer/>
           </div>
         );
     }
