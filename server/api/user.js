@@ -19,6 +19,17 @@ router.get('/:id', (req, res, next) => {
     .then(result => res.send(result[0]))
 })
 
+router.post('/addPlace/:id', (req, res, next) => {
+	const place = req.body
+	console.log(req.body)
+	User.findById(req.params.id)
+	.then(user => {
+		console.log(place)
+		return user.addPlace(place)
+	})
+    .then(result => res.send(result))
+})
+
 //step 1: get user's meetups
 //step 2: get user's meetups with status attached
 //step 3: oh no, just getting a user's meetups doesn't give me the friend's id?
@@ -50,13 +61,31 @@ router.get('/:userId/places', (req, res, next) => {
 })
 
 //create place of user
-router.post('/:userId/newPlace/:address', (req, res, next) => {
+// router.post('/:userId/newPlace/:address', (req, res, next) => {
+// 	let newPlace
+// 	Place.findOrCreate({
+// 		where:{address: req.params.address}
+// 	})
+// 	.then(place => {
+// 		newPlace = place[0]
+// 		console.log(newPlace)
+// 	})
+// 	.then(()=>{return User.findById(req.params.userId)})
+// 	.then(user => {
+// 		return user.addPlace(newPlace)
+// 	})
+// 	.then(()=>res.sendStatus(204) )
+
+// })
+
+router.post('/:userId/newPlace/', (req, res, next) => {
 	let newPlace
 	Place.findOrCreate({
-		where:{address: req.params.address}
+		where:{id: req.body.id}
 	})
 	.then(place => {
 		newPlace = place[0]
+		// console.log(newPlace)
 	})
 	.then(()=>{return User.findById(req.params.userId)})
 	.then(user => {
