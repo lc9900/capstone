@@ -122,6 +122,7 @@ class Confirmation extends Component {
       user => user.initiator
     );
 
+
     if (currentMeetup.placeId) {
       return (
           <div>
@@ -152,7 +153,7 @@ class Confirmation extends Component {
 
     // At this point, the meetup doesn't a place ID, thus it's not accepted yet.
     // So if the user is the initiator, then we don't allow origin change.
-    if (initiator.userId === user.id) {
+    if (initiator.userId === user.id && initiator.status === 'initiated') {
       return (
                <div>
                   <h1>{`Pending friends response for ${meetupId}`}</h1>
