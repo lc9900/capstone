@@ -16,11 +16,11 @@ class Profile extends Component {
         // this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(event) {
-    }
+    // handleSubmit(event) {
+    // }
 
-    handleChange(event) {
-    }
+    // handleChange(event) {
+    // }
     
     componentDidMount(props){
       const { getAllPlaces } = this.props;
@@ -34,7 +34,7 @@ class Profile extends Component {
     // }
 
     render(){
-        const {user, places} = this.props;
+        const {user, places, handlePlaceNameChange, handleAddressChange, handleSubmit, newPlaceName, newAddress} = this.props;
         const userPlaces = user.places
         console.log('places',places)
         console.log('user',user)
@@ -50,10 +50,10 @@ class Profile extends Component {
                   <h2>Add a new address</h2>
 
                     <div>
-                      <form id="new-address-form" onSubmit={this.props.handleSubmit}>
+                      <form id="new-address-form" onSubmit={e => {handleSubmit(e, user.id)}}>
                         <div className="input-group">
-                          <input className="form-control nickname-form" type="text" name="newPlaceName" value={this.props.newPlaceName} placeholder="nickname" onChange={this.props.handlePlaceNameChange} />
-                          <input className="form-control address-form" type="text" name="newAddress" value={this.props.newAddress} placeholder="address" onChange={this.props.handleAddressChange} />
+                          <input className="form-control nickname-form" type="text" name="newPlaceName" value={newPlaceName} placeholder="nickname" onChange={handlePlaceNameChange} />
+                          <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
                           <span className="input-group-btn">
                             <button className="btn" type="submit">Submit</button>
                           </span>
@@ -106,9 +106,9 @@ const mapDispatch = (dispatch) => {
     handlePlaceNameChange: function(e){
       dispatch(createPlaceName(e.target.value))
     },
-    handleSubmit: function(e){
+    handleSubmit: function(e, userId){
       e.preventDefault()
-      dispatch(addPlace({address: e.target.newAddress.value, name: e.target.newPlaceName.value}))
+      dispatch(addPlace({address: e.target.newAddress.value, name: e.target.newPlaceName.value}, userId))
       dispatch(createAddress(''))
       dispatch(createPlaceName(''))
     }

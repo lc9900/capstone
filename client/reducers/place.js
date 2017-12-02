@@ -35,11 +35,13 @@ export function fetchPlaces(){
   }
 };
 
-export function addPlace(placeObj){
+export function addPlace(placeObj, userId){
+  console.log('user id in addPlace?', userId)
   return function thunk(dispatch){
-    console.log('addPlace thunk')
-    return axios.post(`/api/place`, placeObj) //what is address object? i think i need to figure that out
+    let newPlaceObject
+    return axios.post(`/api/place`, placeObj) //adds new place to place model
     .then(res => res.data)
+    
     .then(result => {
       const action = postPlace(result)
       dispatch(action)
