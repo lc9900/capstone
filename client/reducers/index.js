@@ -5,6 +5,7 @@ import userMeetup from "./user-meetup";
 import place from "./place";
 import userDashboard from "./user-dashboard";
 import confirmation from "./confirmation";
+import venue from "./venue";
 
 // Simple reducer for display on main
 const DISPLAY_MAIN = "DISPLAY_MAIN"; //  To render the main component
@@ -32,10 +33,14 @@ export default combineReducers({
     userMeetup,
     place,
     userDashboard,
-    confirmation
+    confirmation,
+    venue
 });
 
 export * from "./user";
 export * from "./user-meetup";
 export * from "./place";
 export * from "./user-dashboard";
+export * from "./map";
+export * from "./confirmation";
+export * from "./venue";

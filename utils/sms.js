@@ -17,6 +17,16 @@ class Sms {
                 })
                 .catch(err => {throw err});
     }
+
+    // recipients is a list of phone numbers
+    sendBulk(recipients, body) {
+        let promises = recipients.map(recipient => {
+            return this.send(recipient, body);
+        });
+
+        return Promise.all(promises)
+                    .catch(err => { throw err; });
+    }
 }
 
 module.exports = Sms;

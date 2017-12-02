@@ -21,22 +21,26 @@ const seed = () => {
             User.create({
                 name: "Bob",
                 email: "bob@capstone.com",
-                password: "123"
+                password: "123",
+                phone: "6462709493"
             }),
             User.create({
                 name: "Boyoon",
                 email: "boyoon@capstone.com",
-                password: "123"
+                password: "123",
+                phone: "6029992817"
             }),
             User.create({
                 name: "AJ",
                 email: "aj@capstone.com",
-                password: "123"
+                password: "123",
+                phone: "6462709493"
             }),
             User.create({
                 name: "Han",
                 email: "han@capstone.com",
-                password: "123"
+                password: "123",
+                phone: "6462709493"
             })
         ])
             .then(users => {
