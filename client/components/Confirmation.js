@@ -125,27 +125,35 @@ class Confirmation extends Component {
 
     if (currentMeetup.placeId) {
       return (
+          
           <div>
-            <h1>{`Accepted Rendezvous for ${meetupId}`}</h1>
-            <br />
-            <div className="card">
+            
+            <div className="row">
+          
+          <div className="col-6">
+            <div className="card confirmation-card">
               <div className="card-body">
-                <h4 className="card-title">Friend</h4>
-                <p className="card-text">{friend.name}</p>
+                <p className="card-text"><strong>Meeting with: </strong>{friend.name}</p>
+                <p className="card-text"><strong>Time: </strong>{displayStartTime}</p>
+
+
               </div>
             </div>
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title">Time</h4>
-                <p className="card-text">{displayStartTime}</p>
-              </div>
-            </div>
+
+          </div>
+
+          <div className="col-6">
+            
+              <h2>{currentMeetup.place.name}</h2>
+              <CalendarButton type="google" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+              <CalendarButton type="mac" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+
+          </div>
+
+        </div>
+            
             <br />
-            <h2>{currentMeetup.place.name}</h2>
-            <CalendarButton type="google" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
-            <br/>
-            <br/>
-            <CalendarButton type="mac" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+            
             <MapContainer/>
           </div>
         );
@@ -156,21 +164,18 @@ class Confirmation extends Component {
     if (initiator.userId === user.id && initiator.status === 'initiated') {
       return (
                <div>
-                  <h1>{`Pending friends response for ${meetupId}`}</h1>
-                  <br />
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title">Friend</h4>
-                      <p className="card-text">{friend.name}</p>
+                  <div className="row">
+                  
+                    <div className="col-6">
+                      <div className="card confirmation-card">
+                        <div className="card-body">
+                          <p className="card-text"><strong>Pending: </strong>{friend.name}</p>
+                          <p className="card-text"><strong>Time: </strong>{displayStartTime}</p>
+                          <p className="card-text"><small className="text-muted"> awaiting response </small></p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title">Time</h4>
-                      <p className="card-text">{displayStartTime}</p>
-                    </div>
-                  </div>
-                  <br />
                 </div>
       );
     }
@@ -178,44 +183,59 @@ class Confirmation extends Component {
 
     return (
       <div>
-        <h1>{`Confirmation for ${meetupId}`}</h1>
-        <br />
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">Friend</h4>
-            <p className="card-text">{friend.name}</p>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">Time</h4>
-            <p className="card-text">{displayStartTime}</p>
-          </div>
-        </div>
-        <br />
-        <form>
-          <div className="form-group">
-            <label>Select Your Point of Origin</label>
-            <select
-              className="form-control"
-              id="selectAddress"
-              onChange={handleChange}
-              value={this.state.userLocationId}
-            >
-              <option value="">-- Select --</option>
-              {user.places.map(place => (
-                <option key={place.id} value={place.id}>
-                  {place.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          { venue.name && <h2>{venue.name}</h2>}
-          { venue.name && (<button className="btn btn-secondary" onClick={handleClick}>
-            Accept Meeting
-          </button>)}
+        
+        <div className="row">
+          
+          <div className="col-6">
+            <div className="card confirmation-card">
+              <div className="card-body">
+                <p className="card-text"><strong>Friend: </strong>{friend.name}</p>
+                <p className="card-text"><strong>Time: </strong>{displayStartTime}</p>
 
-        </form>
+                <form>
+                <div className="form-group place-dropdown">
+                
+                <select
+                  className="form-control "
+                  id="selectAddress"
+                  onChange={handleChange}
+                  value={this.state.userLocationId}
+                >
+                  <option value="">Select Your Point of Origin</option>
+                  {user.places.map(place => (
+                    <option key={place.id} value={place.id}>
+                      {place.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </form>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div className="col-6">
+            
+              <form className="recommendation-form">
+                
+                { venue.name && <h2>{venue.name}</h2>}
+                { venue.name && (<button className="btn btn-success" onClick={handleClick}>
+                  <i className="fa fa-thumbs-o-up" />      Let's meet! 
+                </button>)}
+
+              </form>
+
+
+          </div>
+
+        </div>
+        
+        
+
+        <br />
+        
         {this.state.showMap && <MapContainer />}
       </div>
     );

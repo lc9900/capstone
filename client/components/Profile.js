@@ -62,7 +62,7 @@ class Profile extends Component {
                           <input className="form-control nickname-form" type="text" name="newPlaceName" value={newPlaceName} placeholder="nickname" onChange={handlePlaceNameChange} />
                           <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
                           <span className="input-group-btn">
-                            <button className="btn" type="submit">Submit</button>
+                            <button className="btn btn-primary" type="submit">Submit</button>
                           </span>
                         </div>
                       </form>

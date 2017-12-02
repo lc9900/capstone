@@ -162,6 +162,10 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
+                </div>
+
+
+                <div className="form-row">
                   <div className="form-group col-md-4">
                     <label>Friend</label>
                     <select name='input_friend' value={input_friend} className="form-control" onChange={this.handleChange}>
@@ -171,7 +175,10 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
+                </div>
 
+
+                <div className="form-row">
                   <div className="form-group col-md-2">
                     <label>Origin</label>
                     <select name='input_origin' value={input_origin} className="form-control" onChange={this.handleChange}>
@@ -181,8 +188,9 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
-
                 </div>
+
+                
               <button type="submit" className="btn btn-primary">Submit</button>
             </form>
           </div>
@@ -190,6 +198,10 @@ class NewMeetup extends Component {
     }
 }
 
+
+
+
+                  
 
 //////////////////////////////////////////////////////
 
