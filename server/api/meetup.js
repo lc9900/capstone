@@ -27,9 +27,6 @@ router.get("/:id/includeUser", (req, res, next) => {
 });
 
 // Add New Meetup.
-// The method checks if there's already a meetup during that time.
-// req.body should have --
-// year, month, date, hour, friendId
 // tested
 router.post("/add/:userId", (req, res, next) => {
     if (!validateMeetupTime(req.body))
@@ -46,22 +43,20 @@ router.post("/add/:userId", (req, res, next) => {
 });
 
 // Update a Meetup -- modify or cancel
-// The method will check for time conflict. If found, error is 409 will be sent
-// req.body should have --
-// year, month, date, hour, placeId, status
+// The method will check for time conflict. If found, error is 409 will be sent.
 // tested
 router.put("/:id", (req, res, next) => {
     // if (!validateMeetupTime(req.body))
     //     return res.status(409).send("Scheduled Time is in the past!");
     const { user, friend, startTime, name } = req.body;
     let recipients = [user.phone, friend.phone];
-    let message = `Rendezvous made for ${user.name} and ${friend.name} at ${startTime} @ ${name}`;
+    let message = `Rendezvous on ${startTime} for ${user.name} and ${friend.name} @ ${name}`;
     Meetup.updateMeetup(req.body, req.params.id * 1)
-        // .then(() => {
-        //     let text = new Sms();
-        //     return text.sendBulk(recipients, message);
+        .then(() => {
+            let text = new Sms();
+            return text.sendBulk(recipients, message);
 
-        // })
+        })
         .then(() => {
             return res.send("updated");
         })

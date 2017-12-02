@@ -30,7 +30,6 @@ class Confirmation extends Component {
   componentDidMount() {
     store.dispatch(fetchMeetup(this.props.match.params.id));
     store.dispatch(fetchPlaces());
-    // store.dispatch(fetchExistingVenue(this.props.match.params.id * 1));
   }
 
   calculateMid(loc1, loc2) {
@@ -38,8 +37,6 @@ class Confirmation extends Component {
   }
 
   handleChange(e) {
-    // this.setState({ userLocationId: e.target.value });
-
     const userLocationId = e.target.value;
     const places = this.props.place;
     const initiator = this.props.confirmation.meetup_user_statuses.find(
@@ -72,13 +69,11 @@ class Confirmation extends Component {
       this.setState({ showMap: true, userLocationId });
     })
     .catch(err => { throw err; });
-
-    // this.setState({ showMap: true, userLocationId });
   }
 
   handleClick(e) {
     e.preventDefault();
-    // {googleId, status, originId, userId, name, address, lat, lng}
+
     const {venue, user, confirmation, friend} = this.props;
     const {userLocationId} = this.state;
     const meetupId = Number(this.props.match.params.id);
@@ -99,40 +94,11 @@ class Confirmation extends Component {
       startTime: displayStartTime
     };
 
-    console.log(content);
-    // console.log(confirmation.id);
     axios.put(`/api/meetup/${confirmation.id}`, content)
-        .then(result => {
-          // A hack to make the page refresh
+        .then(() => {
           store.dispatch(loadUser());
         })
         .catch(err => { throw err; });
-
-    // const places = this.props.place;
-    // const initiator = this.props.confirmation.meetup_user_statuses.find(
-    //   user => user.initiator
-    // );
-    // const initiatorLocation = places.find(
-    //   place => place.id === initiator.originId
-    // );
-    // const userLocation = places.find(
-    //   place => place.id === Number(this.state.userLocationId)
-    // );
-
-    // //update store
-    // store.dispatch(
-    //   setUserStart({ lat: userLocation.lat, lng: userLocation.lng })
-    // );
-    // store.dispatch(
-    //   setFriendStart({ lat: initiatorLocation.lat, lng: initiatorLocation.lng })
-    // );
-    // store.dispatch(
-    //   fetchMeetingDestination(
-    //     this.calculateMid(initiatorLocation, userLocation)
-    //   )
-    // );
-
-    // this.setState({ showMap: true });
   }
 
   render() {
@@ -148,40 +114,13 @@ class Confirmation extends Component {
     const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
 
     // Sample time output -- it's actually a string -- 2017-12-01T04:00:00.000Z
-    // console.log("time is: ", typeof currentMeetup.time)
     let convertedStartTime = moment(currentMeetup.time).format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
-    // console.log("new time is: ", convertedStartTime)
-
     let convertedEndTime = moment(currentMeetup.time).add(1, 'hours').format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
-    // console.log("end time is: ", convertedEndTime)
     let displayStartTime = moment(currentMeetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
-    // console.log("display time is: ", displayStartTime)
 
     const initiator = this.props.confirmation.meetup_user_statuses.find(
       user => user.initiator
     );
-
-    // if initiator's id is the same as current user's id, then don't allow changing of origin
-    if(initiator.userId === user.id && initiator.status === 'initiated') {
-      return (
-          <div>
-            <h1>{`Pending friend's response for ${meetupId}`}</h1>
-            <br />
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title">Friend</h4>
-                <p className="card-text">{friend.name}</p>
-              </div>
-            </div>
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title">Time</h4>
-                <p className="card-text">{displayStartTime}</p>
-              </div>
-            </div>
-          </div>
-      );
-    }
 
     if (currentMeetup.placeId) {
       return (
@@ -224,7 +163,7 @@ class Confirmation extends Component {
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">Time</h4>
-            <p className="card-text">{currentMeetup.time}</p>
+            <p className="card-text">{displayStartTime}</p>
           </div>
         </div>
         <br />

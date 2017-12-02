@@ -28,7 +28,7 @@ const seed = () => {
                 name: "Boyoon",
                 email: "boyoon@capstone.com",
                 password: "123",
-                phone: "6462709493"
+                phone: "6029992817"
             }),
             User.create({
                 name: "AJ",
