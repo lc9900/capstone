@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import * as _ from 'lodash';
 import axios from 'axios';
 import moment from 'moment';
-// import {daysInMonth} from '../../utils';
+import { loadUser } from "../store";
 
 class Dashboard extends Component {
     constructor(props){
@@ -24,10 +24,11 @@ class Dashboard extends Component {
     }
 
     componentDidMount(props){
-      const { getAllPlaces, getUsersMeetups } = this.props;
+      const { getAllPlaces, getUsersMeetups, loadSessionUser } = this.props;
       getAllPlaces()
       const userId = this.props.user.id
       getUsersMeetups(userId)
+      loadSessionUser()
 
     }
 
@@ -162,7 +163,8 @@ const mapDispatch = (dispatch) => {
     },
     getUsersMeetups: function(userId){
       return dispatch(fetchMeetups(userId))
-    }
+    },
+    loadSessionUser: () => dispatch(loadUser())
   };
 };
 
