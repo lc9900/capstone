@@ -37,17 +37,17 @@ export function fetchPlaces(){
 };
 
 export function addPlace(placeObj, userId){
-  console.log('user id in addPlace?', userId)
+  // console.log('user id in addPlace?', userId)
   return function thunk(dispatch){
     let newPlaceObject
     return axios.post(`/api/place`, placeObj) //adds new place to place model
-    .then(res => {return newPlaceObject = res.data})
-    .then(result => {
-      return axios.get(`/api/user/${userId}`)
+    .then(res => {
+      newPlaceObject = res.data
+      // console.log('after post place?',newPlaceObject)
     })
-    .then(res => res.data)
-    .then(user => user.addPlace(newPlaceObject))
-    
+    .then(result => {
+      return axios.post(`/api/user/${userId}/newPlace`, newPlaceObject)
+    })
     .then(result => {
       const action = postPlace(newPlaceObject)
       dispatch(action)

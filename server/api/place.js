@@ -11,6 +11,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
+  console.log(req.body)
   const address = req.body.address;
   const name = req.body.name;
   axios
@@ -27,8 +28,12 @@ router.post("/", (req, res, next) => {
         name,
         lat: result.geometry.location.lat,
         lng: result.geometry.location.lng
-      });
+      })
+      .then(place => res.send(place))
     })
-    .then(message => res.send(message))
+    // .then(message => 
+    //   {
+    //     console.log('what did the place api give me', message)
+    //     res.send(message)})
     .catch(next);
 });
