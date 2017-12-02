@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import * as _ from 'lodash';
 import axios from 'axios';
 import {daysInMonth} from '../../utils';
+import { loadUser } from "../store";
 
 class NewMeetup extends Component {
     constructor(props){
@@ -36,7 +37,7 @@ class NewMeetup extends Component {
     handleSubmit(event) {
       event.preventDefault();
       const {input_year, input_month, input_date, input_hour, input_friend, input_origin} = this.state;
-      const {user} = this.props;
+      const {user, loadSessionUser} = this.props;
       // console.log(this.state);
       if(input_year === -1 ||
          input_month === -1 ||
@@ -56,7 +57,7 @@ class NewMeetup extends Component {
           originId: input_origin
         })
         .then(() => {
-          setTimeout(() => this.setState({input_success: ''}), 2000);
+          // setTimeout(() => this.setState({input_success: ''}), 2000);
           this.setState({
             input_year: -1,
             input_month: -1,
@@ -68,6 +69,7 @@ class NewMeetup extends Component {
             input_success: 'Meetup Added!'
           })
         })
+        .then(() => loadSessionUser())
         .catch(err => {
           console.log("error: ", err);
           if(err.response) this.setState({input_err: err.response.data, input_success:''});
@@ -198,6 +200,7 @@ const mapState = (state) => {
 }
 const mapDispatch = (dispatch) => {
   return {
+    loadSessionUser: () => dispatch(loadUser())
   };
 };
 

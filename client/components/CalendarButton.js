@@ -6,8 +6,16 @@ export default class CalendarButton extends Component{
         super();
     }
     buildCalendarUrl(){
-        const {start, end, title, location, type} = this.props;
+        let {start, end, title, location, type} = this.props;
         let calendarUrl = "";
+
+        // 2017-12-01T04:00:00.000Z
+        // if no end time specified, and that it's an object, then
+        // set a end time 1 hour after the start time
+        // if(!end && typeof start === 'object') {
+        //   end = start;
+        //   end.setHours(start.getHours() + 1);
+        // }
 
         switch (type) {
           case "google":

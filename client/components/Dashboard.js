@@ -4,7 +4,8 @@ import { fetchPlaces, fetchMeetups, fetchUserInfo } from '../store';
 import { Redirect } from 'react-router-dom';
 import * as _ from 'lodash';
 import axios from 'axios';
-// import {daysInMonth} from '../../utils';
+import moment from 'moment';
+import { loadUser } from "../store";
 
 class Dashboard extends Component {
     constructor(props){
@@ -21,19 +22,21 @@ class Dashboard extends Component {
 
     handleChange(event) {
     }
-    
+
     componentDidMount(props){
-      const { getAllPlaces, getUsersMeetups } = this.props;
+      const { getAllPlaces, getUsersMeetups, loadSessionUser } = this.props;
       getAllPlaces()
       const userId = this.props.user.id
       getUsersMeetups(userId)
+      loadSessionUser()
 
     }
-    
+
     getAddress(placeId){
-      if(this.props.places.lengh > 0){
+      if(this.props.places.length > 0){
         const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
-        return grepArr[0]['address']  
+        if(grepArr[0]) return grepArr[0]['address']
+        else return ''
       }
     }
 
@@ -50,24 +53,24 @@ class Dashboard extends Component {
         meetupsArray = _.orderBy(meetupsArray, ['time'],['desc'])
         const friendsArray = user['friends'] ? user['friends']: null
         const statusArray = user['status']? user['status']: null
-        
+
         // "new incoming requests" - status: initiated, initiator: false
         // "Pending Outgoing Requests" - status: initiated, initiator: true
-        // "accepted rendezvous" - 'received', 'pending', 'accepted', 
+        // "accepted rendezvous" - 'received', 'pending', 'accepted',
         // can make fourth catogory - 'canceled'
-        // only show in "history" - 'rejected', 
-        
+        // only show in "history" - 'rejected',
+
         return (
           <div>
           	<div className="container-fluid">
           		<div className="row">
-          			
+
           			<div className="col-12">
           				{ meetupsArray ? meetupsArray.map(meetup=>{
-          					
+
                     const thisMeetupId = meetup.id
                     const userId = this.props.user.id
-                    
+
                     let meetupFriendId
                     let meetupTime
 
@@ -75,7 +78,7 @@ class Dashboard extends Component {
 
                     userMeetup.forEach(meetup =>{
                       if(meetup.id === thisMeetupId){
-                        meetupTime = meetup.time
+                        meetupTime = moment(meetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
                         meetup['users'].forEach(participant => {
                           if (participant.id !== userId ) {
                             return meetupFriendId = participant.id
@@ -83,9 +86,9 @@ class Dashboard extends Component {
                         })
                       }
                     })
-                    
+
           					let meetupFriendName
-          					
+
                     friendsArray.map(friend=>{
           						if(friend.id === meetupFriendId){
           							return meetupFriendName = friend.name
@@ -122,20 +125,22 @@ class Dashboard extends Component {
 					          		<div className={`card-header ${backgroundClass}`}> {meetupCategory}</div>
                         <div className="card-body">
 					          			<h4 className="card-title">Meetup with {meetupFriendName}</h4>
-					          			<p className="card-text">time: {meetupTime}</p>
+					          			<p className="card-text">time: {
+                              meetupTime
+                            }</p>
 					          			<p className="card-text">status: {meetupStatus}</p>
                           <p className="card-text">place: {meetup.placeId ? this.getAddress(meetup.placeId) : placeMessage}</p>
 					      				  <a href={`confirmation/${meetup.id}`} className="btn btn-light">Button</a>
                           <p className="card-text"><small className="text-muted">meetup id: {meetup.id} </small></p>
 					          		</div>
 					          	</div>
-          						
+
 
           						</div>)
           				}): <div></div>}
 
           			</div>
-          			
+
           		</div>
           	</div>
         </div>
@@ -159,7 +164,8 @@ const mapDispatch = (dispatch) => {
     },
     getUsersMeetups: function(userId){
       return dispatch(fetchMeetups(userId))
-    }
+    },
+    loadSessionUser: () => dispatch(loadUser())
   };
 };
 
