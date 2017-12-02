@@ -125,12 +125,12 @@ class Dashboard extends Component {
 					          		<div className={`card-header ${backgroundClass}`}> {meetupCategory}</div>
                         <div className="card-body">
 					          			<h4 className="card-title">Meetup with {meetupFriendName}</h4>
-					          			<p className="card-text">time: {
+					          			<p className="card-text">status: {meetupStatus}</p>
+                          <p className="card-text">When: {
                               meetupTime
                             }</p>
-					          			<p className="card-text">status: {meetupStatus}</p>
-                          <p className="card-text">place: {meetup.placeId ? this.getAddress(meetup.placeId) : placeMessage}</p>
-					      				  <a href={`confirmation/${meetup.id}`} className="btn btn-light">Button</a>
+                          <p className="card-text">Where: {meetup.placeId ? this.getAddress(meetup.placeId) : placeMessage}</p>
+					      				  <a href={`confirmation/${meetup.id}`} className="btn btn-info">Check it out!</a>
                           <p className="card-text"><small className="text-muted">meetup id: {meetup.id} </small></p>
 					          		</div>
 					          	</div>

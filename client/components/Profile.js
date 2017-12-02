@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 // import * as _ from 'lodash';
 import axios from 'axios';
 // import {daysInMonth} from '../../utils';
+import store, { loadUser } from "../store";
 
 class Profile extends Component {
     constructor(props){
@@ -19,22 +20,28 @@ class Profile extends Component {
     // handleSubmit(event) {
     // }
 
+    handleSubmit(e, userId){
+      e.preventDefault()
+      store.dispatch(addPlace({address: e.target.newAddress.value, name: e.target.newPlaceName.value}, userId))
+      .then(()=>store.dispatch(createAddress('')))
+      .then(()=>store.dispatch(createPlaceName('')))
+      .then(()=>this.props.loadSessionUser())
+      .catch(err=>{throw err})
+    }
+
     // handleChange(event) {
     // }
     
     componentDidMount(props){
-      const { getAllPlaces } = this.props;
-      getAllPlaces()
+      const { getAllPlaces, loadSessionUser } = this.props;
+      getAllPlaces();
+      loadSessionUser();
     }
     
     // user's place comes on the user object
-    // getAddress(placeId){
-    //   const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
-    //   return grepArr[0]['address']
-    // }
 
     render(){
-        const {user, places, handlePlaceNameChange, handleAddressChange, handleSubmit, newPlaceName, newAddress} = this.props;
+        const {user, places, handlePlaceNameChange, handleAddressChange, newPlaceName, newAddress} = this.props;
         const userPlaces = user.places
         console.log('places',places)
         console.log('user',user)
@@ -50,7 +57,7 @@ class Profile extends Component {
                   <h2>Add a new address</h2>
 
                     <div>
-                      <form id="new-address-form" onSubmit={e => {handleSubmit(e, user.id)}}>
+                      <form id="new-address-form" onSubmit={e => {this.handleSubmit(e, user.id)}}>
                         <div className="input-group">
                           <input className="form-control nickname-form" type="text" name="newPlaceName" value={newPlaceName} placeholder="nickname" onChange={handlePlaceNameChange} />
                           <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
@@ -66,13 +73,13 @@ class Profile extends Component {
                   <h2>Your addresses</h2>
                   {userPlaces ? userPlaces.map(place=>{
                     return(<div key={`${place.id}`}>
-                        <div>id: {place.id}</div>
-                        <div>address: {place.address}</div>
-                        <div>(good to have) on click display on map?</div>
+                        <div>Name: {place.name}</div>
+                        <div>Address: {place.address}</div>
+                        <div>place id: {place.id}</div>
                         <hr/>
                       </div>)
                   }):<div></div>}
-                  <h2>Map somewhere?</h2>
+                  
 
           			</div>
           			
@@ -106,12 +113,7 @@ const mapDispatch = (dispatch) => {
     handlePlaceNameChange: function(e){
       dispatch(createPlaceName(e.target.value))
     },
-    handleSubmit: function(e, userId){
-      e.preventDefault()
-      dispatch(addPlace({address: e.target.newAddress.value, name: e.target.newPlaceName.value}, userId))
-      dispatch(createAddress(''))
-      dispatch(createPlaceName(''))
-    }
+    loadSessionUser: () => dispatch(loadUser())
   };
 };
 
