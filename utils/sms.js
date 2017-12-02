@@ -21,7 +21,10 @@ class Sms {
     // recipients is a list of phone numbers
     sendBulk(recipients, body) {
         // Filtered out any undefined phone
-        recipients = recipients.map(recipient => recipient);
+        console.log("recipients before: ", recipients)
+
+        recipients = recipients.filter(recipient => recipient);
+        console.log("recipients after: ", recipients)
         let promises = recipients.map(recipient => {
             return this.send(recipient, body);
         });
