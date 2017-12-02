@@ -22,7 +22,6 @@ const seed = () => {
                 name: "Bob",
                 email: "bob@capstone.com",
                 password: "123",
-                phone: "6462709493"
             }),
             User.create({
                 name: "Boyoon",
@@ -34,7 +33,6 @@ const seed = () => {
                 name: "AJ",
                 email: "aj@capstone.com",
                 password: "123",
-                phone: "6462709493"
             }),
             User.create({
                 name: "Han",
