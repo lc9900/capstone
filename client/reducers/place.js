@@ -28,6 +28,7 @@ export function fetchPlaces(){
 	.then(res => {
 		return res.data
 	})
+
 	.then(result => {
 		const action = getPlaces(result)
 		dispatch(action)
@@ -40,10 +41,15 @@ export function addPlace(placeObj, userId){
   return function thunk(dispatch){
     let newPlaceObject
     return axios.post(`/api/place`, placeObj) //adds new place to place model
+    .then(res => {return newPlaceObject = res.data})
+    .then(result => {
+      return axios.get(`/api/user/${userId}`)
+    })
     .then(res => res.data)
+    .then(user => user.addPlace(newPlaceObject))
     
     .then(result => {
-      const action = postPlace(result)
+      const action = postPlace(newPlaceObject)
       dispatch(action)
     })
   }
