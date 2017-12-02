@@ -32,7 +32,7 @@ class Dashboard extends Component {
     }
 
     getAddress(placeId){
-      if(this.props.places.lengh > 0){
+      if(this.props.places.length > 0){
         const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
         return grepArr[0]['address']
       }
