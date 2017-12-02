@@ -60,14 +60,14 @@ export default class CalendarButton extends Component{
             let btnText = '',
                 downloadProps = {};
             if(type === 'google') {
-                btnText = 'Google Calendar';
+                btnText = 'Google';
             }
             else {
-                btnText = 'Mac or Outlook Calendar';
+                btnText = 'Mac/Outlook';
                 downloadProps = {
                   download: 'event.ics'
                 };
             }
-            return <a {...downloadProps} href={this.buildCalendarUrl()} target='_blank' className='btn btn-success'>{btnText}</a>
+            return <a {...downloadProps} href={this.buildCalendarUrl()} target='_blank' className='btn btn-success calendar-button'><i className="fa fa-calendar-plus-o" /> {btnText}</a>
     }
 }

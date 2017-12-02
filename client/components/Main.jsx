@@ -51,7 +51,7 @@ class Main extends Component {
             <Route path="/login" component={Login} />
             <Route path="/test" component={Test} />
             <Route path="/confirmation/:id" component={Confirmation} />
-            {/*<Redirect to="/Login" />*/}
+            <Redirect to="/Login" />
           </Switch>
         </div>
       </div>

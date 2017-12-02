@@ -35,7 +35,15 @@ class Dashboard extends Component {
     getAddress(placeId){
       if(this.props.places.length > 0){
         const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
-        if(grepArr[0]) return grepArr[0]['address']
+        if(grepArr[0]) {return grepArr[0]['address']}
+        else return ''
+      }
+    }
+
+    getName(placeId){
+      if(this.props.places.length > 0){
+        const grepArr = $.grep(this.props.places, function(elem){ return elem.id === placeId})
+        if(grepArr[0]) {return grepArr[0]['name']}
         else return ''
       }
     }
@@ -104,14 +112,14 @@ class Dashboard extends Component {
                       if (meetup.meetupId === thisMeetupId){
                         meetupStatus = meetup.status
                         if (meetup.status === "initiated" && meetup.initiator){
-                          meetupCategory = "Pending Outgoing"
+                          meetupCategory = "Outgoing"
                           backgroundClass = "outgoing"
-                          placeMessage = `we need ${meetupFriendName} to enter a starting address to give you a recommendation!`
+                          placeMessage = `-`
                         }
                         else if (meetup.status === "initiated" && !meetup.initiator){
-                          meetupCategory = "New Incoming"
+                          meetupCategory = "Incoming"
                           backgroundClass = "incoming"
-                          placeMessage = `we need you to enter a starting address to give you a recommendation!`
+                          placeMessage = `-`
                         }
                         else {
                           meetupCategory = "Accepted"
@@ -122,15 +130,24 @@ class Dashboard extends Component {
 
           					return (<div className="meetup" key={meetup.id}>
           						<div className="card border-secondary">
-					          		<div className={`card-header ${backgroundClass}`}> {meetupCategory}</div>
+					          		
+                        <div className={`card-header ${backgroundClass}`}> 
+                          <div className="row">
+                            <div className="col-6"><h1 className='lead'>{meetupCategory}</h1></div>
+                            <div className="col-6"><a href={`confirmation/${meetup.id}`} className="btn btn-dark float-right"><i className='fa fa-drivers-license-o'/></a></div>
+                          </div>
+                          
+                        </div>
+
+
                         <div className="card-body">
-					          			<h4 className="card-title">Meetup with {meetupFriendName}</h4>
-					          			<p className="card-text">status: {meetupStatus}</p>
-                          <p className="card-text">When: {
+					          			<h4 className="card-title">Meet with {meetupFriendName}</h4>
+                          <p className="card-text"><strong>When:</strong> {
                               meetupTime
                             }</p>
-                          <p className="card-text">Where: {meetup.placeId ? this.getAddress(meetup.placeId) : placeMessage}</p>
-					      				  <a href={`confirmation/${meetup.id}`} className="btn btn-info">Check it out!</a>
+                          <p className="card-text"><strong>Where:</strong> {meetup.placeId ? this.getName(meetup.placeId) : placeMessage}</p>
+                          <p className="card-text"><strong>Address:</strong> {meetup.placeId ? this.getAddress(meetup.placeId) : '-'}</p>
+                          
                           <p className="card-text"><small className="text-muted">meetup id: {meetup.id} </small></p>
 					          		</div>
 					          	</div>

@@ -101,7 +101,7 @@ class Login extends React.Component {
             <p>
               <a href="/api/auth/google" className="btn btn-danger">
                 <i className="fa fa-google" />
-                <span>{message} with Google</span>
+                <span> {message}</span>
               </a>
             </p>
           </div>
