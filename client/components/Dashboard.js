@@ -78,7 +78,7 @@ class Dashboard extends Component {
 
                     userMeetup.forEach(meetup =>{
                       if(meetup.id === thisMeetupId){
-                        meetupTime = moment(meetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
+                        meetupTime = moment(meetup.time).tz('America/New_York').format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
                         meetup['users'].forEach(participant => {
                           if (participant.id !== userId ) {
                             return meetupFriendId = participant.id

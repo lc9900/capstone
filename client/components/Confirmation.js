@@ -11,7 +11,7 @@ import MapContainer from "./MapContainer";
 import store, {fetchVenue, loadUser} from "../store";
 import axios from 'axios';
 import CalendarButton from './CalendarButton';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 class Confirmation extends Component {
   constructor() {
@@ -78,7 +78,7 @@ class Confirmation extends Component {
     const {userLocationId} = this.state;
     const meetupId = Number(this.props.match.params.id);
     const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
-    let displayStartTime = moment(currentMeetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0];
+    let displayStartTime = moment(currentMeetup.time).tz('America/New_York').format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0];
 
     let content = {
       googleId: venue.googleId,
@@ -114,9 +114,9 @@ class Confirmation extends Component {
     const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
 
     // Sample time output -- it's actually a string -- 2017-12-01T04:00:00.000Z
-    let convertedStartTime = moment(currentMeetup.time).format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
-    let convertedEndTime = moment(currentMeetup.time).add(1, 'hours').format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
-    let displayStartTime = moment(currentMeetup.time).format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
+    let convertedStartTime = moment(currentMeetup.time).tz('America/New_York').format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
+    let convertedEndTime = moment(currentMeetup.time).tz('America/New_York').add(1, 'hours').format("YYYYMMDDTHHmmssZ").split(/-|\+/)[0];
+    let displayStartTime = moment(currentMeetup.time).tz('America/New_York').format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
 
     const initiator = this.props.confirmation.meetup_user_statuses.find(
       user => user.initiator
