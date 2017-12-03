@@ -4,7 +4,7 @@ import { fetchPlaces, fetchMeetups, fetchUserInfo } from '../store';
 import { Redirect } from 'react-router-dom';
 import * as _ from 'lodash';
 import axios from 'axios';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { loadUser } from "../store";
 
 class Dashboard extends Component {
@@ -85,7 +85,8 @@ class Dashboard extends Component {
 
                     userMeetup.forEach(meetup =>{
                       if(meetup.id === thisMeetupId){
-                        meetupTime = moment(meetup.time).tz('America/New_York').format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
+                        // moment.tz(meetup.time, 'America/New_York')
+                        meetupTime = moment.tz(meetup.time, 'America/New_York').format("YYYY/MM/DD HH:mm-ssZ").split(/-|\+/)[0]
                         meetup['users'].forEach(participant => {
                           if (participant.id !== userId ) {
                             return meetupFriendId = participant.id
@@ -129,13 +130,13 @@ class Dashboard extends Component {
 
           					return (<div className="meetup" key={meetup.id}>
           						<div className="card border-secondary">
-					          		
-                        <div className={`card-header ${backgroundClass}`}> 
+
+                        <div className={`card-header ${backgroundClass}`}>
                           <div className="row">
                             <div className="col-6"><h1 className='lead'>{meetupCategory}</h1></div>
                             <div className="col-6"><a href={`confirmation/${meetup.id}`} className="btn btn-dark float-right"><i className='fa fa-drivers-license-o'/></a></div>
                           </div>
-                          
+
                         </div>
 
 
@@ -146,7 +147,7 @@ class Dashboard extends Component {
                             }</p>
                           <p className="card-text"><strong>Where:</strong> {meetup.placeId ? this.getName(meetup.placeId) : placeMessage}</p>
                           <p className="card-text"><strong>Address:</strong> {meetup.placeId ? this.getAddress(meetup.placeId) : '-'}</p>
-                          
+
                           <p className="card-text"><small className="text-muted">meetup id: {meetup.id} </small></p>
 					          		</div>
 					          	</div>
