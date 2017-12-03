@@ -41,7 +41,6 @@ export class MapContainer extends Component {
 
     return (
       <div>
-        <h1>Map!</h1>
         <Map
           google={google}
           style={style}

@@ -8,6 +8,7 @@ import Nav from "./Nav";
 import MapContainer from "./MapContainer";
 import NewMeetup from "./NewMeetup";
 import Dashboard from "./Dashboard";
+import Profile from "./Profile";
 import Confirmation from "./Confirmation";
 import Test from "./Test";
 import { displayMain, loadUser, logout } from "../store";
@@ -35,22 +36,22 @@ class Main extends Component {
   }
 
   render() {
-    const { user, display } = this.props;
+    const { user, display, logoutUser } = this.props;
     if (!display) return <div />;
 
     return (
       <div>
         <div className="container">
-          <Nav />
+          <Nav user={this.props.user} logout={logoutUser}/>
           <Switch>
-
+            <Route path='/profile' component={Profile} />
             <Route path='/dashboard' component={Dashboard} />
             <Route path="/map" component={MapContainer} />
             <Route path="/meetup" component={NewMeetup} />
             <Route path="/login" component={Login} />
             <Route path="/test" component={Test} />
             <Route path="/confirmation/:id" component={Confirmation} />
-            {/*<Redirect to="/Login" />*/}
+            <Redirect to="/login" />
           </Switch>
         </div>
       </div>
