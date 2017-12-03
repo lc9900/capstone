@@ -55,6 +55,16 @@ export function addPlace(placeObj, userId){
   }
 }
 
+export function deleteUserPlace(userId, placeId){
+  return function thunk(dispatch){
+    return axios.delete(`/api/user/${userId}/deletePlace/${placeId}`)
+    .then(result => {
+      const action = fetchPlaces()
+      dispatch(action)
+    })
+  }
+}
+
 		
 
 //UserMeetup Reducer

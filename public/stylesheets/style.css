@@ -95,12 +95,24 @@ body {
   margin-right: 1%;
 }
 
-.meetup .card-header h1 {
+.meetup .card-header{
+  height:50px;
+  padding: 0;
+}
+
+.meetup .card-header .btn{
   margin-top: 5px;
+  margin-right: 5px;
+}
+
+
+.meetup .card-header h1 {
+  margin-top: 15px;
+  margin-left: 15px;
 }
 
 .card{
-  height: 350px;
+  height: auto;
 }
 
 .incoming{
@@ -151,13 +163,46 @@ body {
 
 /*profile styles*/
 
+h4.lead{
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+h2{
+  margin-bottom: 30px;
+}
+
+.address-form-row label{
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
 .nickname-form{
-  width: 100px;
+  width: 400px;
 }
 
 .address-form{
   width: 400px; 
 }
+
+.newAddressInput{
+  border: none;
+}
+
+.address-form-row{
+  margin-bottom: 10px;
+}
+
+.address-btn{
+  position: absolute;
+  display: block;
+  left: 400px;
+  width: 100px;
+  margin-bottom: 30px;
+}
+
+
 
 /*login styles*/
 .login-button{
