@@ -35,6 +35,8 @@ class Profile extends Component {
       .then(()=>this.props.loadSessionUser())
       .catch(err=>{throw err})
 
+      this.setState({address:''})
+
     }
 
     handleDelete(e, userId, placeId){
@@ -78,9 +80,8 @@ class Profile extends Component {
 
         return (
           <div>
-          	<div className="container-fluid">
-          		
-              <div className="row">
+          	<div className="card profile">
+          		<div className="row">
 
           			<div className="col-6">
 

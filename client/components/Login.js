@@ -63,7 +63,7 @@ class Login extends React.Component {
           <div>
             <form onSubmit={this.onLoginSubmit}>
               <div className="form-group">
-                <label>Email</label>
+ 
                 {error.length > 0 ? (
                   <div className="form-group alert alert-danger">{error}</div>
                 ) : (
@@ -75,18 +75,20 @@ class Login extends React.Component {
                   className="form-control"
                   value={this.state.email}
                   onChange={this.handleChange}
+                  placeHolder="Email"
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label>Password</label>
+
                 <input
                   name="password"
                   type="password"
                   className="form-control"
                   value={this.state.password}
                   onChange={this.handleChange}
+                  placeHolder="Password"
                   required
                 />
               </div>

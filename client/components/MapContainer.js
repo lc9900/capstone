@@ -34,9 +34,9 @@ export class MapContainer extends Component {
     const { google, map } = this.props;
     const { showInfoWindow, activeMarker, selectedPlace } = this.state;
     const style = {
-      width: "70%",
-      height: "70%",
-      position: "relative"
+      width: "97%",
+      height: "500px",
+      position: "center"
     };
 
     return (
