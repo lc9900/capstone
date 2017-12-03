@@ -20,7 +20,8 @@ module.exports = {
         query: {
           presets: ['react', 'es2015', 'stage-2']
         }
-      }
+      },
+      {test: /.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
   }
 };

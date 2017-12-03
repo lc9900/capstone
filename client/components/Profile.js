@@ -1,18 +1,20 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { fetchPlaces, createPlaceName, createAddress, addPlace } from '../store';
+import { fetchPlaces, createPlaceName, createAddress, addPlace, deleteUserPlace } from '../store';
 import { Redirect } from 'react-router-dom';
 // import * as _ from 'lodash';
 import axios from 'axios';
 // import {daysInMonth} from '../../utils';
 import store, { loadUser } from "../store";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+
 
 class Profile extends Component {
     constructor(props){
         super();
-        this.state = {
 
-        };
+        this.state = { address: '' }
+        this.onChange = (address) => this.setState({ address })
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.handleChange = this.handleChange.bind(this);
     }
@@ -22,9 +24,24 @@ class Profile extends Component {
 
     handleSubmit(e, userId){
       e.preventDefault()
+      geocodeByAddress(this.state.address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error))
+
       store.dispatch(addPlace({address: e.target.newAddress.value, name: e.target.newPlaceName.value}, userId))
       .then(()=>store.dispatch(createAddress('')))
       .then(()=>store.dispatch(createPlaceName('')))
+      .then(()=>this.props.loadSessionUser())
+      .catch(err=>{throw err})
+
+      this.setState({address:''})
+
+    }
+
+    handleDelete(e, userId, placeId){
+      e.preventDefault()
+      store.dispatch(deleteUserPlace(userId, placeId))
       .then(()=>this.props.loadSessionUser())
       .catch(err=>{throw err})
     }
@@ -49,51 +66,81 @@ class Profile extends Component {
 
         if(! user.id) return <Redirect to='/Login' />
 
+
+          const inputProps = {
+            value: this.state.address,
+            onChange: this.onChange,
+            name: 'newAddress'
+          }
+
+          const autoCompleteClass = {
+            root: 'form-control address-form',
+            input: 'newAddressInput'
+          }
+
         return (
           <div>
           	<div className="card profile">
           		<div className="row">
 
-          			<div className="col-12">
+          			<div className="col-6">
 
-                  <h2>Add a new address</h2>
+                  <h4 className="lead">Add New Address</h4>
 
                     <div>
                       <form id="new-address-form" onSubmit={e => {this.handleSubmit(e, user.id)}}>
-                          <div className="row">
-                            <div className="col-1">
+
+                          <div className="row address-form-row">
+                            <div className="col-2">
                               <label htmlFor="newPlaceName"> Name </label>
                             </div>
-                            <div className="col-11">
-                              <input className="form-control nickname-form" type="text" name="newPlaceName" value={newPlaceName} placeholder="nickname" onChange={handlePlaceNameChange} />
+                            <div className="col-10">
+                              <input className="form-control nickname-form" type="text" name="newPlaceName" value={newPlaceName} placeholder="" onChange={handlePlaceNameChange} />
                             </div>
                           </div>
-                          <div className="row">
-                            <div className="col-1">
+                          <div className="row address-form-row">
+                            <div className="col-2">
                               <label htmlFor="newAddress"> Address </label>
                             </div>
-                            <div className="col-11">
-                              <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
+                            <div className="col-10">
+                              <PlacesAutocomplete inputProps={inputProps} classNames={autoCompleteClass} name="newAddress" value={newAddress} onChange={handleAddressChange}/>
+                              
                             </div>
                           </div>
                           
-                          <span className="input-group-btn">
-                            <button className="btn btn-primary" type="submit">Submit</button>
-                          </span>
+                            
+                              <button className="btn btn-primary address-btn" type="submit">Submit</button>
+                          <br />  
+                          <br />  
+                          
                         
                       </form>
                     </div>
 
-                  <hr/>
-
-                  <h2>Your addresses</h2>
+                  
+                </div>
+                <div className= "col-6">
+                  <h4 className="lead">Saved Addresses</h4>
                   {userPlaces ? userPlaces.map(place=>{
                     return(<div key={`${place.id}`}>
-                        <div>Name: {place.name}</div>
-                        <div>Address: {place.address}</div>
-                        <div>place id: {place.id}</div>
-                        <hr/>
-                      </div>)
+                        <div className="row">
+                          
+                          <div className="col-10">
+                            <div>Name: {place.name}</div>
+                            <div>Address: {place.address}</div>
+                          </div>
+                          
+                          <div className="col-2">
+                            <form onSubmit={e => this.handleDelete(e, user.id, place.id)}>
+                              <button className="btn btn-danger" type="submit">x</button>
+                            </form>
+                          </div>
+
+                        </div>
+
+                        <hr />
+                      </div>
+                    )
                   }):<div></div>}
 
 
@@ -108,6 +155,7 @@ class Profile extends Component {
 
 //////////////////////////////////////////////////////
 
+// <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
 
 
 const mapState = (state) => {
