@@ -29,10 +29,10 @@ class Login extends React.Component {
     event.preventDefault();
     loginUser({ email, password })
       .then(() => {
-        this.setState({
-          email: "",
-          password: ""
-        });
+        // this.setState({
+        //   email: "",
+        //   password: ""
+        // });
       })
       .catch(err => {
         this.setState({ error: err.response.data });
