@@ -51,7 +51,7 @@ class Profile extends Component {
 
         return (
           <div>
-          	<div className="container-fluid">
+          	<div className="card profile">
           		<div className="row">
 
           			<div className="col-12">

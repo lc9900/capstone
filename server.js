@@ -11,7 +11,7 @@ const passport = require('passport');
 
 app.listen(PORT, (req,res)=> {
     console.log(`listening on ${PORT}`)
-})
+}) 
 
 // logging
 app.use(morgan('dev'))

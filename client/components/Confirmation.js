@@ -189,30 +189,40 @@ class Confirmation extends Component {
               </div>
             </div>
 
+
             <div className="col-6">
-              <h2>{currentMeetup.place.name}</h2>
-              <h4>{currentMeetup.place.address}</h4>
-              <CalendarButton
-                type="google"
-                start={convertedStartTime}
-                end={convertedEndTime}
-                title={"Rendezvous"}
-                location={currentMeetup.place.name}
-              />
-              <CalendarButton
-                type="mac"
-                start={convertedStartTime}
-                end={convertedEndTime}
-                title={"Rendezvous"}
-                location={currentMeetup.place.name}
-              />
+              <div className='card confirmation-card2'>
+                <h2>{currentMeetup.place.name}</h2>
+                <h4>{currentMeetup.place.address}</h4>
+                <div>  
+                  <CalendarButton
+                    type="google"
+                    start={convertedStartTime}
+                    end={convertedEndTime}
+                    title={"Rendezvous"}
+                    location={currentMeetup.place.name}
+                  />
+                  <CalendarButton
+                    type="mac"
+                    start={convertedStartTime}
+                    end={convertedEndTime}
+                    title={"Rendezvous"}
+                    location={currentMeetup.place.name}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
           <br />
 
-          <MapContainer />
+          <div  className='row'>
+            <div className='col-12'>
+              <MapContainer />
+            </div>
+          </div>        
         </div>
+
       );
     }
 
@@ -296,8 +306,11 @@ class Confirmation extends Component {
         </div>
 
         <br />
-
-        {this.state.showMap && <MapContainer />}
+        <div  className='row'>
+          <div className='col-12'>
+            {this.state.showMap && <MapContainer />}
+          </div>
+        </div>
       </div>
     );
   }

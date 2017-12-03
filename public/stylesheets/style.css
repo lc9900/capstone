@@ -13,10 +13,14 @@ strong{
 }
 
 nav {
-  background-color: #f2f2f2;
+  background-color: #26ACEE;
   padding: 8px;
   margin-top: 5px;
   margin-bottom: 30px;
+}
+
+.login {
+  background-color: #DD281C
 }
 
 .navbar-brand {
@@ -39,6 +43,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-image: url('http://lecafedefrance.com/wp-content/uploads/2013/12/cafedefrance-1024x654.jpg');
+  background-size:cover;
 }
 .controls {
   margin-top: 10px;
@@ -99,21 +105,31 @@ body {
   margin-top: 5px;
 }
 
+#meetupForm {
+  margin: ;
+  background-color: ;
+  padding: 2%;
+
+}
+
 .card{
   height: 350px;
+  opacity: 0.95;
 }
 
 .incoming{
-  background-color: #B3C100;
-}
+/*  background-color: #B3C100;
+*/
+background-color: #D025C3}
 
 .outgoing{
-  background-color: #B7B8B6;
+  background-color: #F8FF1B ;
 }
 
 .accepted{
-  background-color: #4CB5F5;
-}
+/*  background-color: #4CB5F5;
+*/
+background-color: #5AE917}
 
 .btn-light{
   border-color: black;
@@ -128,8 +144,9 @@ body {
   margin-top: 20px;
 }
 
-.confirmation-card{
-  /*width: 50%;*/
+.confirmation-card2{
+  padding: 2%;
+  height: auto;
 }
 
 .recommendation-form{
@@ -150,6 +167,12 @@ body {
 }*/
 
 /*profile styles*/
+
+.profile{
+  width: 65%;
+  height: 65%;
+  padding: 3%;
+} 
 
 .nickname-form{
   width: 100px;

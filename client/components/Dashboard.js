@@ -129,9 +129,10 @@ class Dashboard extends Component {
                     })
 
           					return (<div className="meetup" key={meetup.id}>
-          						<div className="card border-secondary">
+          						<div className="card border-dark">
+					          		
+                        <div className={`card-header ${backgroundClass}`}> 
 
-                        <div className={`card-header ${backgroundClass}`}>
                           <div className="row">
                             <div className="col-6"><h1 className='lead'>{meetupCategory}</h1></div>
                             <div className="col-6"><a href={`confirmation/${meetup.id}`} className="btn btn-dark float-right"><i className='fa fa-drivers-license-o'/></a></div>
