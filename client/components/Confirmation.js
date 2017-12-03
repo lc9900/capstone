@@ -194,7 +194,7 @@ class Confirmation extends Component {
               <div className='card confirmation-card2'>
                 <h2>{currentMeetup.place.name}</h2>
                 <h4>{currentMeetup.place.address}</h4>
-                <div>  
+                <div>
                   <CalendarButton
                     type="google"
                     start={convertedStartTime}
@@ -220,7 +220,7 @@ class Confirmation extends Component {
             <div className='col-12'>
               <MapContainer />
             </div>
-          </div>        
+          </div>
         </div>
 
       );
@@ -293,15 +293,19 @@ class Confirmation extends Component {
           </div>
 
           <div className="col-6">
-            <form className="recommendation-form">
-              {venue.name && <h2>{venue.name}</h2>}
-              {venue.name && <h4>{venue.address}</h4>}
-              {venue.name && (
-                <button className="btn btn-success" onClick={handleClick}>
-                  <i className="fa fa-thumbs-o-up" /> Let's meet!
-                </button>
-              )}
-            </form>
+
+            {venue.name && (
+                <div className='card confirmation-card2'>
+                  <form className="recommendation-form">
+                    <h2>{venue.name}</h2>
+                    <h4>{venue.address}</h4>
+                    <button className="btn btn-success" onClick={handleClick}>
+                      <i className="fa fa-thumbs-o-up" /> Let's meet!
+                    </button>
+                  </form>
+                </div>
+              )
+            }
           </div>
         </div>
 
