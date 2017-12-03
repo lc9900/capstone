@@ -31,13 +31,13 @@ class Profile extends Component {
 
     // handleChange(event) {
     // }
-    
+
     componentDidMount(props){
       const { getAllPlaces, loadSessionUser } = this.props;
       getAllPlaces();
       loadSessionUser();
     }
-    
+
     // user's place comes on the user object
 
     render(){
@@ -47,13 +47,15 @@ class Profile extends Component {
         console.log('user',user)
         console.log('userPlaces',userPlaces)
 
+        if(! user.id) return <Redirect to='/Login' />
+
         return (
           <div>
           	<div className="container-fluid">
           		<div className="row">
-          			
+
           			<div className="col-12">
-          				
+
                   <h2>Add a new address</h2>
 
                     <div>
@@ -66,8 +68,8 @@ class Profile extends Component {
                           </span>
                         </div>
                       </form>
-                    </div>   
-                             
+                    </div>
+
                   <hr/>
 
                   <h2>Your addresses</h2>
@@ -79,10 +81,10 @@ class Profile extends Component {
                         <hr/>
                       </div>)
                   }):<div></div>}
-                  
+
 
           			</div>
-          			
+
           		</div>
           	</div>
         </div>

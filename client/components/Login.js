@@ -44,15 +44,16 @@ class Login extends React.Component {
     const { error } = this.state;
     // If the user is already logged in, then redirect to home page
     if (user.id) {
-      console.log("The logged in user is ", user);
-      return (
-        <div>
-          <h2>Welcome back {user.name}</h2>
-          <button onClick={logoutUser} className="btn btn-primary">
-            Logout
-          </button>
-        </div>
-      );
+      return <Redirect to='/dashboard' />
+      // console.log("The logged in user is ", user);
+      // return (
+      //   <div>
+      //     <h2>Welcome back {user.name}</h2>
+      //     <button onClick={logoutUser} className="btn btn-primary">
+      //       Logout
+      //     </button>
+      //   </div>
+      // );
     }
 
     return (
