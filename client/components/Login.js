@@ -75,7 +75,7 @@ class Login extends React.Component {
                   className="form-control"
                   value={this.state.email}
                   onChange={this.handleChange}
-                  placeHolder="Email"
+                  placeholder="Email"
                   required
                 />
               </div>
@@ -88,7 +88,7 @@ class Login extends React.Component {
                   className="form-control"
                   value={this.state.password}
                   onChange={this.handleChange}
-                  placeHolder="Password"
+                  placeholder="Password"
                   required
                 />
               </div>

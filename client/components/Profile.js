@@ -103,7 +103,8 @@ class Profile extends Component {
                               <label htmlFor="newAddress"> Address </label>
                             </div>
                             <div className="col-10">
-                              <PlacesAutocomplete inputProps={inputProps} classNames={autoCompleteClass} name="newAddress" value={newAddress} onChange={handleAddressChange}/>
+                              <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
+
                               
                             </div>
                           </div>
@@ -156,7 +157,7 @@ class Profile extends Component {
 //////////////////////////////////////////////////////
 
 // <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
-
+//<PlacesAutocomplete inputProps={inputProps} classNames={autoCompleteClass} name="newAddress" value={newAddress} onChange={handleAddressChange}/>
 
 const mapState = (state) => {
   return {
