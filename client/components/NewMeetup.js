@@ -49,11 +49,11 @@ class NewMeetup extends Component {
          ) { this.setState({input_err: "Please select from ALL selections"}); }
       else {
         axios.post(`/api/meetup/add/${user.id}`, {
-          year: input_year * 1,
-          month: input_month * 1,
-          date: input_date * 1,
-          hour: input_hour * 1,
-          friendId: input_friend * 1,
+          year: input_year,
+          month: input_month,
+          date: input_date,
+          hour: input_hour,
+          friendId: input_friend,
           originId: input_origin
         })
         .then(() => {
@@ -190,7 +190,7 @@ class NewMeetup extends Component {
                   </div>
                 </div>
 
-                
+
               <button type="submit" className="btn btn-primary">Submit</button>
             </form>
           </div>
@@ -201,7 +201,7 @@ class NewMeetup extends Component {
 
 
 
-                  
+
 
 //////////////////////////////////////////////////////
 
