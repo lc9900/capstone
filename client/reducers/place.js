@@ -63,7 +63,7 @@ const PlaceReducer = function(state = [], action) {
     case GET_PLACES : 
       return action.places
     case POST_PLACE:
-      return [...state, action.address]
+      return [...state, action.place]
     default:
       return state;
   }

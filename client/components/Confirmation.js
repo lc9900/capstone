@@ -135,6 +135,7 @@ class Confirmation extends Component {
               <div className="card-body">
                 <p className="card-text"><strong>Meeting with: </strong>{friend.name}</p>
                 <p className="card-text"><strong>Time: </strong>{displayStartTime}</p>
+                <p className="card-text"><small className="text-muted">meetup id: {currentMeetup.id} </small></p>
 
 
               </div>
@@ -172,6 +173,7 @@ class Confirmation extends Component {
                           <p className="card-text"><strong>Pending: </strong>{friend.name}</p>
                           <p className="card-text"><strong>Time: </strong>{displayStartTime}</p>
                           <p className="card-text"><small className="text-muted"> awaiting response </small></p>
+                          <p className="card-text"><small className="text-muted">meetup id: {currentMeetup.id} </small></p>
                         </div>
                       </div>
                     </div>
@@ -208,6 +210,7 @@ class Confirmation extends Component {
                     </option>
                   ))}
                 </select>
+                <p className="card-text"><small className="text-muted">meetup id: {currentMeetup.id} </small></p>
               </div>
             </form>
 

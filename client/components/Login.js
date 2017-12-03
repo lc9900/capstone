@@ -58,7 +58,8 @@ class Login extends React.Component {
 
     return (
       <div className="row">
-        <div className="col">
+        <div className="col-4"></div>
+        <div className="col-4">
           <div>
             <form onSubmit={this.onLoginSubmit}>
               <div className="form-group">
@@ -98,13 +99,13 @@ class Login extends React.Component {
 
           <hr />
 
-          <div>
-            <p>
-              <a href="/api/auth/google" className="btn btn-danger">
+          <div className="login-button">
+            
+              <a href="/api/auth/google" className="btn btn-danger ">
                 <i className="fa fa-google" />
-                <span> {message}</span>
+                <span> {message} </span>
               </a>
-            </p>
+            
           </div>
         </div>
       </div>
