@@ -143,10 +143,10 @@ class Confirmation extends Component {
       return <div>Loading...</div>;
     }
 
+    const { user, confirmation, friend, venue } = this.props;
     if (!user.id) return <Redirect to="/Login" />;
 
     const meetupId = Number(this.props.match.params.id);
-    const { user, confirmation, friend, venue } = this.props;
     const { handleChange, handleClick } = this;
     const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
 
