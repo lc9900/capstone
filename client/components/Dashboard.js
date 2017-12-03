@@ -67,10 +67,9 @@ class Dashboard extends Component {
         // "accepted rendezvous" - 'received', 'pending', 'accepted',
         // can make fourth catogory - 'canceled'
         // only show in "history" - 'rejected',
-
         return (
           <div>
-          	<div className="container-fluid">
+          	<div className="container-fluid dashboard-container">
           		<div className="row">
 
           			<div className="col-12">
