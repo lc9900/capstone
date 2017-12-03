@@ -12,17 +12,17 @@ const Meetup = db.define('meetup', {
 // tested
 Meetup.initiateMeetup = function(data, initiatorId) {
     const {year, month, date, hour, friendId, originId} = data;
-    console.log('Inside initiateMeetup')
+    // console.log('Inside initiateMeetup')
     // Javascript's Date's month is 0-based,
     // So if user specify 12(december), javascript knows it as 11 (12 - 1)
     // which is why it's month -1 below
     // let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
     let input = `${year}-${month}-${date} ${hour}:00:00`;
-    console.log("input: ", input);
+    // console.log("input: ", input);
     let meetTime = moment.tz(input, 'YYYYMMDDHH:SS','America/New_York').utc().format(),
         target_meetup;
 
-    console.log("meetupTime: ", meetTime);
+    // console.log("meetupTime: ", meetTime);
 
     return Promise.all([
                 this.checkConflict(meetTime, initiatorId),
