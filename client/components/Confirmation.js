@@ -143,18 +143,28 @@ class Confirmation extends Component {
           </div>
 
           <div className="col-6">
-            
+            <div className='card confirmation-card2'>
               <h2>{currentMeetup.place.name}</h2>
-              <CalendarButton type="google" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
-              <CalendarButton type="mac" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+              <div>
+                <CalendarButton type="google" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+                <CalendarButton type="mac" start={convertedStartTime} end={convertedEndTime} title={'Rendezvous'} location={currentMeetup.place.name}/>
+              </div>
+              
+            </div>
+            
+              
 
           </div>
 
         </div>
             
             <br />
-            
-            <MapContainer/>
+
+            <div  className='row'>
+            <div  className='col-12'>
+              <MapContainer/>
+            </div>
+            </div>
           </div>
         );
     }

@@ -113,7 +113,7 @@ class NewMeetup extends Component {
         } = this.state;
 
         return (
-          <div>
+          <div className="card">
             {
                 input_err && (<div className="alert alert-danger" role="alert">
                                 {input_err}
@@ -124,9 +124,9 @@ class NewMeetup extends Component {
                                 {input_success}
                               </div>)
             }
-            <form onSubmit={this.handleSubmit}>
+            <form id='meetupForm' onSubmit={this.handleSubmit}>
                 <div className="form-row">
-                  <div className="form-group col-md-1">
+                  <div className="form-group col-md-2">
                     <label>Year</label>
                     <select name='input_year' value={input_year} className="form-control" onChange={this.handleChange}>
                       <option value='-1'>Choose</option>
@@ -135,7 +135,7 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
-                  <div className="form-group col-md-1">
+                  <div className="form-group col-md-2">
                     <label>Month</label>
                     <select name='input_month' value={input_month} className="form-control" onChange={this.handleChange}>
                       <option value='-1'>Choose</option>
@@ -144,7 +144,7 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
-                  <div className="form-group col-md-1">
+                  <div className="form-group col-md-2">
                     <label>Date</label>
                     <select name='input_date' value={input_date} className="form-control" onChange={this.handleChange}>
                       <option value='-1'>Choose</option>
@@ -153,7 +153,7 @@ class NewMeetup extends Component {
                       }
                     </select>
                   </div>
-                  <div className="form-group col-md-1">
+                  <div className="form-group col-md-2">
                     <label>Hour</label>
                     <select name='input_hour' value={input_hour} className="form-control" onChange={this.handleChange}>
                       <option value='-1'>Choose</option>

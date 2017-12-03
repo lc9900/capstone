@@ -5,7 +5,7 @@ export default function Nav(props) {
   console.log("nav user: ", props.user)
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav className="navbar navbar-expand-lg navbar-dark ">
         <a className="navbar-brand" href="#">
           Rendezvous
         </a>

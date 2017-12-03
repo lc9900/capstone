@@ -129,7 +129,7 @@ class Dashboard extends Component {
                     })
 
           					return (<div className="meetup" key={meetup.id}>
-          						<div className="card border-secondary">
+          						<div className="card border-dark">
 					          		
                         <div className={`card-header ${backgroundClass}`}> 
                           <div className="row">
