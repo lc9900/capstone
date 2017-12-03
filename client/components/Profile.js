@@ -60,13 +60,27 @@ class Profile extends Component {
 
                     <div>
                       <form id="new-address-form" onSubmit={e => {this.handleSubmit(e, user.id)}}>
-                        <div className="input-group">
-                          <input className="form-control nickname-form" type="text" name="newPlaceName" value={newPlaceName} placeholder="nickname" onChange={handlePlaceNameChange} />
-                          <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
+                          <div className="row">
+                            <div className="col-1">
+                              <label htmlFor="newPlaceName"> Name </label>
+                            </div>
+                            <div className="col-11">
+                              <input className="form-control nickname-form" type="text" name="newPlaceName" value={newPlaceName} placeholder="nickname" onChange={handlePlaceNameChange} />
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-1">
+                              <label htmlFor="newAddress"> Address </label>
+                            </div>
+                            <div className="col-11">
+                              <input className="form-control address-form" type="text" name="newAddress" value={newAddress} placeholder="address" onChange={handleAddressChange} />
+                            </div>
+                          </div>
+                          
                           <span className="input-group-btn">
                             <button className="btn btn-primary" type="submit">Submit</button>
                           </span>
-                        </div>
+                        
                       </form>
                     </div>
 

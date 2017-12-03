@@ -88,11 +88,17 @@ body {
 }
 
 /* dashboard styles */
+.dashboard-container{
+  width: 101%;
+  padding: 0;
+  
+}
+
 .meetup{
-  width: 50%;
+  width: 49%;
   display: inline-block;
   margin-bottom: 10px;
-  padding-right: 10px;
+  margin-right: 1%;
 }
 
 .meetup .card-header h1 {
@@ -174,4 +180,10 @@ background-color: #5AE917}
 
 .address-form{
   width: 400px; 
+}
+
+/*login styles*/
+.login-button{
+  /*display: flex;
+  justify-content: center;*/
 }

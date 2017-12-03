@@ -58,11 +58,12 @@ class Login extends React.Component {
 
     return (
       <div className="row">
-        <div className="col">
+        <div className="col-4"></div>
+        <div className="col-4">
           <div>
             <form onSubmit={this.onLoginSubmit}>
               <div className="form-group">
-                <label>Email</label>
+ 
                 {error.length > 0 ? (
                   <div className="form-group alert alert-danger">{error}</div>
                 ) : (
@@ -74,18 +75,20 @@ class Login extends React.Component {
                   className="form-control"
                   value={this.state.email}
                   onChange={this.handleChange}
+                  placeHolder="Email"
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label>Password</label>
+
                 <input
                   name="password"
                   type="password"
                   className="form-control"
                   value={this.state.password}
                   onChange={this.handleChange}
+                  placeHolder="Password"
                   required
                 />
               </div>
@@ -98,13 +101,13 @@ class Login extends React.Component {
 
           <hr />
 
-          <div>
-            <p>
-              <a href="/api/auth/google" className="btn btn-danger">
+          <div className="login-button">
+            
+              <a href="/api/auth/google" className="btn btn-danger ">
                 <i className="fa fa-google" />
-                <span> {message}</span>
+                <span> {message} </span>
               </a>
-            </p>
+            
           </div>
         </div>
       </div>
