@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import moment from 'moment-timezone';
 import { loadUser } from "../store";
+import Script from 'react-load-script'
 
 class Dashboard extends Component {
     constructor(props){
@@ -21,6 +22,18 @@ class Dashboard extends Component {
     }
 
     handleChange(event) {
+    }
+
+    handleScriptCreate() {
+      this.setState({ scriptLoaded: false })
+    }
+     
+    handleScriptError() {
+      this.setState({ scriptError: true })
+    }
+     
+    handleScriptLoad() {
+      this.setState({ scriptLoaded: true })
     }
 
     componentDidMount(props){
@@ -68,7 +81,16 @@ class Dashboard extends Component {
         // can make fourth catogory - 'canceled'
         // only show in "history" - 'rejected',
         return (
+
+      
           <div>
+
+              <Script
+      url="https://maps.googleapis.com/maps/api/js?key=AIzaSyAopJDwUG1vlrsZg94qP6yuPtzapUgYw8g&libraries=places"
+      onCreate={this.handleScriptCreate.bind(this)}
+      onError={this.handleScriptError.bind(this)}
+      onLoad={this.handleScriptLoad.bind(this)}
+    />
           	<div className="container-fluid dashboard-container">
           		<div className="row">
 
