@@ -151,16 +151,16 @@ class Confirmation extends Component {
     const currentMeetup = user.meetups.find(meetup => meetup.id === meetupId);
 
     // Sample time output -- it's actually a string -- 2017-12-01T04:00:00.000Z
-    let convertedStartTime = moment(currentMeetup.time)
+    const convertedStartTime = moment(currentMeetup.time)
       .tz("America/New_York")
       .format("YYYYMMDDTHHmmssZ")
       .split(/-|\+/)[0];
-    let convertedEndTime = moment(currentMeetup.time)
+    const convertedEndTime = moment(currentMeetup.time)
       .tz("America/New_York")
       .add(1, "hours")
       .format("YYYYMMDDTHHmmssZ")
       .split(/-|\+/)[0];
-    let displayStartTime = moment(currentMeetup.time)
+    const displayStartTime = moment(currentMeetup.time)
       .tz("America/New_York")
       .format("YYYY/MM/DD HH:mm-ssZ")
       .split(/-|\+/)[0];
