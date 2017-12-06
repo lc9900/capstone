@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import {daysInMonth} from '../../utils';
 import { loadUser } from "../store";
+import DayPicker from 'react-day-picker';
 
 class NewMeetup extends Component {
     constructor(props){
@@ -15,11 +16,10 @@ class NewMeetup extends Component {
             now_year = now.getFullYear(),
             now_month = now.getMonth() + 1;
 
-
         this.state = {
-          avail_years: [2017, 2018],
-          avail_months: _.range(1, 13),
-          avail_dates: _.range(1, daysInMonth(now_year, now_month) + 1),
+          // avail_years: [2017, 2018],
+          // avail_months: _.range(1, 13),
+          // avail_dates: _.range(1, daysInMonth(now_year, now_month) + 1),
           avail_hours: _.range(24),
           input_year:  -1,
           input_month: -1,
@@ -28,10 +28,26 @@ class NewMeetup extends Component {
           input_friend: -1,
           input_origin: -1,
           input_err: '',
-          input_success: ''
+          input_success: '',
+          selectedDay: undefined
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleDayClick = this.handleDayClick.bind(this);
+    }
+
+    handleDayClick(day) {
+      // console.log(day.getDate()) // Sat Dec 16 2017 12:00:00 GMT-0500 (EST)
+      const year = day.getFullYear(),
+            month = day.getMonth() + 1,
+            date = day.getDate();
+      // console.log('Year, Month, Date: ', year, month, date);
+      this.setState({
+        selectedDay: day ,
+        input_year: year,
+        input_month: month,
+        input_date: date
+      });
     }
 
     handleSubmit(event) {
@@ -124,75 +140,57 @@ class NewMeetup extends Component {
                                 {input_success}
                               </div>)
             }
-            <form id='meetupForm' onSubmit={this.handleSubmit}>
-                <div className="form-row">
-                  <div className="form-group col-md-2">
-                    <label>Year</label>
-                    <select name='input_year' value={input_year} className="form-control" onChange={this.handleChange}>
-                      <option value='-1'>Choose</option>
-                      {
-                        avail_years.map(year => <option key={year} value={year}>{year}</option>)
-                      }
-                    </select>
-                  </div>
-                  <div className="form-group col-md-2">
-                    <label>Month</label>
-                    <select name='input_month' value={input_month} className="form-control" onChange={this.handleChange}>
-                      <option value='-1'>Choose</option>
-                      {
-                        avail_months.map(month => <option key={month} value={month}>{month}</option>)
-                      }
-                    </select>
-                  </div>
-                  <div className="form-group col-md-2">
-                    <label>Date</label>
-                    <select name='input_date' value={input_date} className="form-control" onChange={this.handleChange}>
-                      <option value='-1'>Choose</option>
-                      {
-                        avail_dates.map(date => <option key={date} value={date}>{date}</option>)
-                      }
-                    </select>
-                  </div>
-                  <div className="form-group col-md-2">
-                    <label>Hour</label>
-                    <select name='input_hour' value={input_hour} className="form-control" onChange={this.handleChange}>
-                      <option value='-1'>Choose</option>
-                      {
-                        avail_hours.map(hour => <option key={hour} value={hour}>{hour}</option>)
-                      }
-                    </select>
-                  </div>
-                </div>
+            <br />
+            <div className='row'>
+              <div className='col-md-6'>
+                <form id='meetupForm' onSubmit={this.handleSubmit}>
+                    <div className="form-row">
+                      <div className="form-group col-md-5">
+                        <label>Hour</label>
+                        <select name='input_hour' value={input_hour} className="form-control" onChange={this.handleChange}>
+                          <option value='-1'>Choose</option>
+                          {
+                            avail_hours.map(hour => <option key={hour} value={hour}>{hour}</option>)
+                          }
+                        </select>
+                      </div>
+                    </div>
 
 
-                <div className="form-row">
-                  <div className="form-group col-md-4">
-                    <label>Friend</label>
-                    <select name='input_friend' value={input_friend} className="form-control" onChange={this.handleChange}>
-                      <option value='-1'>Choose a friend</option>
-                      {
-                        user.friends.map(friend => <option key={friend.id} value={friend.id}>{friend.name}</option>)
-                      }
-                    </select>
-                  </div>
-                </div>
+                    <div className="form-row">
+                      <div className="form-group col-md-6">
+                        <label>Friend</label>
+                        <select name='input_friend' value={input_friend} className="form-control" onChange={this.handleChange}>
+                          <option value='-1'>Choose a friend</option>
+                          {
+                            user.friends.map(friend => <option key={friend.id} value={friend.id}>{friend.name}</option>)
+                          }
+                        </select>
+                      </div>
+                    </div>
 
 
-                <div className="form-row">
-                  <div className="form-group col-md-2">
-                    <label>Origin</label>
-                    <select name='input_origin' value={input_origin} className="form-control" onChange={this.handleChange}>
-                      <option value='-1'>Choose origin</option>
-                      {
-                        user.places.map(place => <option key={place.id} value={place.id}>{place.name}</option>)
-                      }
-                    </select>
-                  </div>
-                </div>
-
-
-              <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
+                    <div className="form-row">
+                      <div className="form-group col-md-6">
+                        <label>Origin</label>
+                        <select name='input_origin' value={input_origin} className="form-control" onChange={this.handleChange}>
+                          <option value='-1'>Choose origin</option>
+                          {
+                            user.places.map(place => <option key={place.id} value={place.id}>{place.name}</option>)
+                          }
+                        </select>
+                      </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Submit</button>
+                </form>
+              </div>
+              <div className='col-md-6'>
+                <DayPicker
+                  onDayClick={this.handleDayClick}
+                  selectedDays={this.state.selectedDay}
+                />
+              </div>
+            </div>
           </div>
         )
     }

@@ -90,7 +90,8 @@ router.delete("/:id", (req, res, next) => {
 // it's moved here into the api.
 function validateMeetupTime(data) {
     const { year, month, date, hour } = data;
-    let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0);
+    // let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0);
+    let meetTime = new Date(year, month, date, hour, 0, 0, 0);
     if (meetTime < new Date()) return false;
 
     return true;
