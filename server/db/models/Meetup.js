@@ -18,7 +18,7 @@ Meetup.initiateMeetup = function(data, initiatorId) {
     // which is why it's month -1 below
     // let meetTime = new Date(year, month - 1, date, hour, 0, 0, 0),
     let input = `${year}-${month}-${date} ${hour}:00:00`;
-    // console.log("input: ", input);
+    console.log("input: ", input);
     let meetTime = moment.tz(input, 'YYYYMMDDHH:SS','America/New_York').utc().format(),
         target_meetup;
 
