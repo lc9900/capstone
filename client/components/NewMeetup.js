@@ -145,16 +145,16 @@ class NewMeetup extends Component {
             
               <div className='row'>
                 
-                <div className='col-md-4 calendar'>
+                <div className='col-lg-4 calendar'>
                   <DayPicker
                     onDayClick={this.handleDayClick}
                     selectedDays={this.state.selectedDay}
                   />
                 </div>
 
-                <div className='col-md-1'></div>
+                <div className='col-lg-2'></div>
 
-                <div className='col-md-6'>
+                <div className='col-lg-5'>
                   <form id='meetupForm' onSubmit={this.handleSubmit}>
                       <div className="form-row">
                         <div className="form-group col-md-11">
