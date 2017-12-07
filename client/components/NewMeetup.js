@@ -129,7 +129,7 @@ class NewMeetup extends Component {
         } = this.state;
 
         return (
-          <div className="card">
+          <div className="card calendar-card">
             {
                 input_err && (<div className="alert alert-danger" role="alert">
                                 {input_err}
@@ -141,56 +141,66 @@ class NewMeetup extends Component {
                               </div>)
             }
             <br />
-            <div className='row'>
-              <div className='col-md-6'>
-                <form id='meetupForm' onSubmit={this.handleSubmit}>
-                    <div className="form-row">
-                      <div className="form-group col-md-5">
-                        <label>Hour</label>
-                        <select name='input_hour' value={input_hour} className="form-control" onChange={this.handleChange}>
-                          <option value='-1'>Choose</option>
-                          {
-                            avail_hours.map(hour => <option key={hour} value={hour}>{hour}</option>)
-                          }
-                        </select>
+            
+            
+              <div className='row'>
+                
+                <div className='col-md-4 calendar'>
+                  <DayPicker
+                    onDayClick={this.handleDayClick}
+                    selectedDays={this.state.selectedDay}
+                  />
+                </div>
+
+                <div className='col-md-1'></div>
+
+                <div className='col-md-6'>
+                  <form id='meetupForm' onSubmit={this.handleSubmit}>
+                      <div className="form-row">
+                        <div className="form-group col-md-11">
+                          <label>Hour</label>
+                          <select name='input_hour' value={input_hour} className="form-control" onChange={this.handleChange}>
+                            <option value='-1'>Choose</option>
+                            {
+                              avail_hours.map(hour => <option key={hour} value={hour}>{hour}</option>)
+                            }
+                          </select>
+                        </div>
                       </div>
-                    </div>
 
 
-                    <div className="form-row">
-                      <div className="form-group col-md-6">
-                        <label>Friend</label>
-                        <select name='input_friend' value={input_friend} className="form-control" onChange={this.handleChange}>
-                          <option value='-1'>Choose a friend</option>
-                          {
-                            user.friends.map(friend => <option key={friend.id} value={friend.id}>{friend.name}</option>)
-                          }
-                        </select>
+                      <div className="form-row">
+                        <div className="form-group col-md-11">
+                          <label>Friend</label>
+                          <select name='input_friend' value={input_friend} className="form-control" onChange={this.handleChange}>
+                            <option value='-1'>Choose a friend</option>
+                            {
+                              user.friends.map(friend => <option key={friend.id} value={friend.id}>{friend.name}</option>)
+                            }
+                          </select>
+                        </div>
                       </div>
-                    </div>
 
 
-                    <div className="form-row">
-                      <div className="form-group col-md-6">
-                        <label>Origin</label>
-                        <select name='input_origin' value={input_origin} className="form-control" onChange={this.handleChange}>
-                          <option value='-1'>Choose origin</option>
-                          {
-                            user.places.map(place => <option key={place.id} value={place.id}>{place.name}</option>)
-                          }
-                        </select>
+                      <div className="form-row">
+                        <div className="form-group col-md-11">
+                          <label>Origin</label>
+                          <select name='input_origin' value={input_origin} className="form-control" onChange={this.handleChange}>
+                            <option value='-1'>Choose origin</option>
+                            {
+                              user.places.map(place => <option key={place.id} value={place.id}>{place.name}</option>)
+                            }
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </form>
+                      <div className="form-group col-md-11">
+                        <button type="submit" className="btn btn-primary float-right">Submit</button>
+                      </div>
+                  </form>
+                </div>
+                
               </div>
-              <div className='col-md-6'>
-                <DayPicker
-                  onDayClick={this.handleDayClick}
-                  selectedDays={this.state.selectedDay}
-                />
-              </div>
-            </div>
+         
           </div>
         )
     }

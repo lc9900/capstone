@@ -11,7 +11,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  console.log(req.body)
+
   const address = req.body.address;
   const name = req.body.name;
   axios
@@ -22,6 +22,7 @@ router.post("/", (req, res, next) => {
     )
     .then(place => {
       const result = place.data.results[0];
+
       Place.create({
         googleId: result.place_id,
         address: result.formatted_address,
